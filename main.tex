@@ -56,6 +56,7 @@
 Для перемещения \textbf{нажмите} на название требуемого раздела:
 \begin{enumerate}[noitemsep]
     \item \hyperref[sec:linear-dependence]{Линейная зависимость системы векторов. Базис}
+    \item \hyperref[sec:scalar-multiply]{Скалярное произведение векторов и его свойства. Проекции}
     \item \hyperref[sec:det]{Свойства определителей}
     \item \hyperref[sec:line]{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}
     \item \hyperref[sec:parabola]{Парабола. Определение, вывод уравнения, характеристики}
@@ -102,7 +103,7 @@
 
 \newpage
 
-\section{Скалярное произведение векторов и его свойства. Проекции}
+\section{Скалярное произведение векторов и его свойства. Проекции}\label{sec:scalar-multiply}
 
 Скалярное произведение векторов \(\overrightarrow{a}\) и \(\overrightarrow{b}\) есть ничто иное как:
 \begin{align*}
@@ -112,9 +113,56 @@
 
 где \(\varphi\) — величина угла между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
 
+\subsection*{Проекция}
+
+Проекцией вектора \(\overrightarrow{AB}\) на ось \(\overrightarrow{b}\) — это длина отрезка \(A_1B_1 \in \overrightarrow{b}\) со знаком плюс, если направление вектора \(A_1B_1\) с направлением оси \(\overrightarrow{b}\), и со знаком минус, если эти направления противоположны.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{projection.png}
+\end{center}
+
+Проекция вектора \(\overrightarrow{AB} = \overrightarrow{a}\) обозначается формулой: \(\text{Пр}_{\overrightarrow{b}}\overrightarrow{AB}\) или \(\text{Пр}_{\overrightarrow{b}}\overrightarrow{a}\)
+
+Проекция вектора \(\overrightarrow{a}\) на ось \(\overrightarrow{b}\) выражается формулой:
+\begin{align*}
+     &  &
+    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = |\overrightarrow{a}| \cdot \cos{\varphi}
+\end{align*}
+
+С другой стороны:
+\begin{align*}
+     &  &
+    \cos{\varphi} = \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{a}| \cdot |\overrightarrow{b}|}
+\end{align*}
+
+Следовательно:
+\begin{align*}
+     &  &
+    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = |\overrightarrow{a}| \cdot \cos{\varphi} \iff
+    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = \frac{|\overrightarrow{a}| \cdot \overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{a}| \cdot \overrightarrow{b}} \iff
+    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} =
+    \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{b}|}
+\end{align*}
+
+\subsubsection*{Свойства проекций}
+\begin{enumerate}
+    \item {
+          \(    \text{Пр}_{\overrightarrow{b}}(\overrightarrow{a_1} + \overrightarrow{a_2} + \overrightarrow{a_3}) =
+          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_1} +
+          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_2} +
+          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_3}
+          \)
+          }
+    \item {
+          \(
+          \text{Пр}_{\overrightarrow{b}}(\lambda \cdot \overrightarrow{a}) = \lambda \cdot \text{Пр}_{\overrightarrow{b}}\overrightarrow{a}
+          \)
+          }
+\end{enumerate}
+
 \subsection*{Свойства скалярного произведения}
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
     \item \((\overrightarrow{a}, \overrightarrow{b}) = (\overrightarrow{b}, \overrightarrow{a})\)
 
     \item \((\overrightarrow{a} + \overrightarrow{b}, \overrightarrow{c}) = (\overrightarrow{a}, \overrightarrow{c}) + (\overrightarrow{b} + \overrightarrow{c})\)
@@ -130,8 +178,6 @@
     \item \(\overrightarrow{a} \perp \overrightarrow{b} \iff (\overrightarrow{a}, \overrightarrow{b}) = 0\)
 
     \item Угол между двумя ненулевыми векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\) является острым тогда и только тогда, когда \((\overrightarrow{a}, \overrightarrow{b}) > 0\); и является тупым – когда \((\overrightarrow{a}, \overrightarrow{b}) < 0\).
-
-    \item \(\text{Пр}_{b}\overrightarrow{a} = \dfrac{(\overrightarrow{a}, \overrightarrow{b})}{|\overrightarrow{b}|}\)
 \end{enumerate}
 
 
