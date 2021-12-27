@@ -8,6 +8,8 @@
 \usepackage{wrapfig}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{enumitem} % no item sep in list
+\usepackage[explicit]{titlesec}
 % \usepackage{geometry}
 % \usepackage{emoji}
 % \usepackage{amsmath}
@@ -22,9 +24,11 @@
 % \usepackage{xifthen}
 % \usepackage{amssymb}
 % \usepackage{unicode-math}
-% \usepackage{textcomp}
 
 \setmainfont{PT Serif}
+
+\titleformat{\section}
+{\Large}{\textbf{\thesection.}}{0.5em}{\textbf{#1}} \usepackage{textcomp}
 
 \usepackage[%
     left=1.25in,%
@@ -50,7 +54,7 @@
 \section*{Быстрое перемещение}
 
 Для перемещения \textbf{нажмите} на название требуемого раздела:
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
     \item \hyperref[sec:linear-dependence]{Линейная зависимость системы векторов. Базис}
     \item \hyperref[sec:det]{Свойства определителей}
     \item \hyperref[sec:line]{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}
@@ -59,9 +63,18 @@
 
 \newpage
 
-\section*{Линейная зависимость системы векторов. Базис}\label{sec:linear-dependence}
+\section{Линейная зависимость системы векторов. \\ Базис}\label{sec:linear-dependence}
 
 \subsection*{Определения}
+
+\subsubsection*{Линейная комбинация}
+Линейной комбинацией \(n\) векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) называется сумма произведений этих векторов на произвольные вещественные числа, то есть выражения вида:
+\begin{align*}
+     &  &
+    \lambda_1 \cdot \overrightarrow{a_1} + \lambda_2 \overrightarrow{a_2} + ... + \lambda_n + \overrightarrow{a_n}
+\end{align*}
+
+где \(\lambda_1, \lambda_2, ..., \lambda_n\) — любые действительные числа.
 
 \subsubsection*{Линейно зависимая система векторов}
 Если для линейная комбинация \(\lambda_1 \cdot \overrightarrow{a_1} + \lambda_2 \cdot \overrightarrow{a_2} + ... + \lambda_n \cdot \overrightarrow{a_n}\) равна нулевому вектору (нулю) при условии, что хотя бы одно из чисел \(\lambda_1, \lambda_2, ..., \lambda_n\) отлично от нуля, то система векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) называется \textbf{линейно зависимой}.
@@ -89,11 +102,42 @@
 
 \newpage
 
-\section*{Скалярное произведение векторов и его свойства. Проекции}
+\section{Скалярное произведение векторов и его свойства. Проекции}
+
+Скалярное произведение векторов \(\overrightarrow{a}\) и \(\overrightarrow{b}\) есть ничто иное как:
+\begin{align*}
+     &  &
+    (\overrightarrow{a}, \overrightarrow{b}) = |\overrightarrow{a}| \cdot |\overrightarrow{b}| \cdot \cos{\varphi},
+\end{align*}
+
+где \(\varphi\) — величина угла между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
+
+\subsection*{Свойства скалярного произведения}
+
+\begin{enumerate}[noitemsep]
+    \item \((\overrightarrow{a}, \overrightarrow{b}) = (\overrightarrow{b}, \overrightarrow{a})\)
+
+    \item \((\overrightarrow{a} + \overrightarrow{b}, \overrightarrow{c}) = (\overrightarrow{a}, \overrightarrow{c}) + (\overrightarrow{b} + \overrightarrow{c})\)
+
+    \item \((\lambda \cdot \overrightarrow{a}, \overrightarrow{b}) = \lambda \cdot (\overrightarrow{a}, \overrightarrow{b})\), где \(\lambda \in R\).
+
+    \item \((\overrightarrow{a}, \overrightarrow{a}) \geq 0\), причем \((\overrightarrow{a}, \overrightarrow{a}) = 0 \iff |\overrightarrow{a}| = 0\)
+
+    \item \(\overrightarrow{a}^2 = |\overrightarrow{a}|^2\)
+
+    \item \(\cos{\varphi} = \dfrac{(\overrightarrow{a}, \overrightarrow{b})}{|\overrightarrow{a}| \cdot |\overrightarrow{b}|}\), где \(\varphi\) угол между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
+
+    \item \(\overrightarrow{a} \perp \overrightarrow{b} \iff (\overrightarrow{a}, \overrightarrow{b}) = 0\)
+
+    \item Угол между двумя ненулевыми векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\) является острым тогда и только тогда, когда \((\overrightarrow{a}, \overrightarrow{b}) > 0\); и является тупым – когда \((\overrightarrow{a}, \overrightarrow{b}) < 0\).
+
+    \item \(\text{Пр}_{b}\overrightarrow{a} = \dfrac{(\overrightarrow{a}, \overrightarrow{b})}{|\overrightarrow{b}|}\)
+\end{enumerate}
+
 
 \newpage
 
-\section*{Свойства определителей}\label{sec:det}
+\section{Свойства определителей}\label{sec:det}
 
 1. Определитель транспонированной матрицы равен определителю исходной матрицы: \(\det A^T = \det A\)
 
@@ -252,7 +296,7 @@
 
 \newpage
 
-\section*{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}\label{sec:line}
+\section{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}\label{sec:line}
 
 \subsection*{Каноническое уравнение прямой}
 
@@ -338,7 +382,7 @@
 
 \newpage
 
-\section*{Парабола. Определение, вывод уравнения, характеристики}\label{sec:parabola}
+\section{Парабола. Определение, вывод уравнения, характеристики}\label{sec:parabola}
 
 \subsection*{Определение}
 Парабола — геометрическое место точек на плоскости, равноудалённых от данной прямой \(d\) и данной точки \(F\).
