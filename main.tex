@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{enumitem} % no item sep in list
 \usepackage[explicit]{titlesec}
+\usepackage{amssymb}
 % \usepackage{geometry}
 % \usepackage{emoji}
 % \usepackage{amsmath}
@@ -22,7 +23,6 @@
 % \usepackage{pgfplots}
 % \usepackage{ragged2e}
 % \usepackage{xifthen}
-% \usepackage{amssymb}
 % \usepackage{unicode-math}
 
 \setmainfont{PT Serif}
@@ -60,6 +60,8 @@
     \item \hyperref[sec:det]{Свойства определителей}
     \item \hyperref[sec:line]{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}
     \item \hyperref[sec:parabola]{Парабола. Определение, вывод уравнения, характеристики}
+    \item \hyperref[sec:limit_1]{Первый замечательный предел}
+    \item \hyperref[sec:limit_2]{Второй замечательный предел}
 \end{enumerate}
 
 \newpage
@@ -113,7 +115,7 @@
 
 где \(\varphi\) — величина угла между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
 
-\subsection*{Проекция}
+\subsection*{Проекции}
 
 Проекцией вектора \(\overrightarrow{AB}\) на ось \(\overrightarrow{b}\) — это длина отрезка \(A_1B_1 \in \overrightarrow{b}\) со знаком плюс, если направление вектора \(A_1B_1\) с направлением оси \(\overrightarrow{b}\), и со знаком минус, если эти направления противоположны.
 
@@ -144,7 +146,7 @@
     \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{b}|}
 \end{align*}
 
-\subsubsection*{Свойства проекций}
+\subsection*{Свойства проекций}
 \begin{enumerate}
     \item {
           \(    \text{Пр}_{\overrightarrow{b}}(\overrightarrow{a_1} + \overrightarrow{a_2} + \overrightarrow{a_3}) =
@@ -179,7 +181,6 @@
 
     \item Угол между двумя ненулевыми векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\) является острым тогда и только тогда, когда \((\overrightarrow{a}, \overrightarrow{b}) > 0\); и является тупым – когда \((\overrightarrow{a}, \overrightarrow{b}) < 0\).
 \end{enumerate}
-
 
 \newpage
 
@@ -342,7 +343,7 @@
 
 \newpage
 
-\section{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее}\label{sec:line}
+\section{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее, в отрезках на осях}\label{sec:line}
 
 \subsection*{Каноническое уравнение прямой}
 
@@ -384,20 +385,21 @@
 
 \subsection*{Общее уравнение прямой}
 
-Уравнение, имеющее вид \(Ax + By + C = 0 \) — это общее уравнение прямой на плоскости в прямоугольной системе координат \(Oxy\).
+Уравнение, имеющее вид \(Ax + By + C = 0\) — это общее уравнение прямой на плоскости в прямоугольной системе координат \(Oxy\).
 
 \subsubsection*{Теорема}
 Любое уравнение первой степени, имеющее вид \(Ax + By + C = 0\), где \(A, B, C\) – некоторые действительные числа (\(A\) и \(B\) не равны одновременно нулю) определяет прямую линию в прямоугольной системе координат на плоскости.
 В свою очередь, любая прямая в прямоугольной системе координат на плоскости определяется уравнением, имеющим вид \(Ax + By + C = 0\) при некотором наборе значений \(A, B, C\).
 \subsubsection*{Доказательство}
-Теорема состоит из 2-х пунктов. Докажем каждый из них: \\
+Теорема состоит из 2-х пунктов.
+Докажем каждый из них: \\
 
 \textbf{Пункт 1}. Уравнение \(Ax + By + C = 0\) определяет на плоскости прямую. \\
 
-Пусть существует некоторая точка М 0 ( x 0 ,   y 0 ) М0(x0, y0), координаты которой отвечают уравнению \(Ax + By + C = 0\). Таким образом: \(Ax_0 + By_0 + C = 0\).
+Пусть существует некоторая точка \(M_0(x_0, y_0)\), координаты которой отвечают уравнению \(Ax + By + C = 0\), таким образом: \(Ax_0 + By_0 + C = 0\).
 Вычтем из левой и правой частей уравнений \(Ax + By + C = 0\) левую и правую части уравнения \(Ax_0 + By_0 + C = 0\), получим новое уравнение, имеющее вид \(A(x - x_0) + B(y - y_0) + C = 0\).
 Оно эквивалентно \(Ax + By + C = 0\).
-
+§
 Полученное уравнение \(A(x - x_0) + B(y - y_0) + C = 0\) является необходимым и достаточным условием перпендикулярности векторов \(\overrightarrow{n} = (A, B)\) и \(\overrightarrow{M_0M} = (x - x_0, y - y_0)\).
 Таким образом множество точек \(M(x, y)\) задает в прямоугольной системе координат прямую линию, перпендикулярную направлению вектора \(\overrightarrow{n} = (A, B)\).
 
@@ -424,11 +426,32 @@
     Ax + By + C = 0
 \end{align*}
 
+\subsection*{Уравнение прямой в отрезках на осях}
 
+Рассмотрим общее уравнение прямой \(Ax + By + C = 0\) при условии \(A \neq 0, B \neq 0, C \neq 0\) (то есть прямая не параллельна ни одной из осей координат и не проходит через начало отсчёта).
+Теперь преобразуем уравнение:
+
+\begin{align*}
+     &  &
+    Ax + By + C = 0  \iff Ax + By = -C \iff \frac{x}{\frac{-C}{A}} + \frac{y}{\frac{-C}{B}} = 1
+\end{align*}
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{axis_line.png}
+\end{center}
+
+Введем обозначение: \(\frac{-C}{A} = a\), \(\frac{-C}{B} = b\).
+Отсюда получим уравнение:
+\begin{align*}
+     &  &
+    \frac{x}{a} + \frac{y}{b} = 1
+\end{align*}
+
+Это — уравнение прямой в отрезках на осях, так как числа m и n соответствуют длинам отрезков (с соответствующими знаками), которые прямая отсекает на осях координат (считая от начала отсчёта).
 
 \newpage
 
-\section{Парабола. Определение, вывод уравнения, характеристики}\label{sec:parabola}
+\section{Парабола. Определение, вывод уравнения,\\ характеристики}\label{sec:parabola}
 
 \subsection*{Определение}
 Парабола — геометрическое место точек на плоскости, равноудалённых от данной прямой \(d\) и данной точки \(F\).
@@ -467,6 +490,23 @@
     y^2 = 2px
 \end{gather*}
 
+\subsection*{Уравнение в полярной системе координат}
+
+Выберем фокус \(F\) параболы, а в качестве полярной оси — луч с началом в точке \(F\), перпендикулярный директрисе и не пересекающий её.
+Тогда для произвольной точки \(M(r, \varphi)\), принадлежащей параболе, по определению \(d = r\).
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{parabola2.png}
+\end{center}
+
+Поскольку \(d = p + r\cos{\varphi}\), получим уравнение параболы в координатной форме:
+\begin{align*}
+     &  &
+    d = p + r \cdot \cos{\varphi}  \iff r = \dfrac{p}{1 - \cos{\varphi}}
+\end{align*}
+
+что является уравнением параболы в полярной системе координат \(Fr\varphi\).
+
 \subsection*{Свойства параболы}
 
 \begin{itemize}
@@ -474,5 +514,126 @@
     \item[—]{Если фокус параболы отразить относительно касательной, то его образ будет лежать на директрисе;}
     \item[—]{Все параболы подобны. Расстояние между фокусом и директрисой определяет масштаб;}
 \end{itemize}
+
+\newpage
+
+\section{Первый замечательный предел}\label{sec:limit_1}
+Рассмотрим односторонние пределы \(\lim_{x \to +0}{\dfrac{\sin{x}}{x}}\) и \(\lim_{x \to -0}{\dfrac{\sin{x}}{x}}\) и докажем, что они равны \(1\).
+
+Рассмотрим случай \(x \in \Big(0; \dfrac{\pi}{2}\Big)\).
+Отложим этот угол на единичной окружности так, чтобы его вершина совпадала с началом координат, а одна сторона совпадала с осью \(OX\).
+Пусть \(K\) — точка пересечения второй сторны угла с единичной окружностью, а точка \(L\) — с касательной к этой окружност в точке \(A = (1; 0)\). Точка \(H\) — проекция точки \(K\) на ось \(OX\).
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{limit_1.png}
+\end{center}
+
+Очевидно, что \(S_{\triangle OKA} < S_{sect KOA} < S_{\triangle OAL}\), где \(S_{sect KOA}\) — площадь сектора  \(KOA\). Поскольку \(|KH| = \sin{x}, |LA| = \tg{x}\):
+\begin{gather*}
+    S_{\triangle OKA} = \frac{1}{2} \cdot |OA| \cdot |KH| = \frac{1}{2} \cdot 1 \cdot \sin{x} = \frac{\sin{x}}{2} \\
+    S_{sect KOA} = \frac{1}{2} \cdot |OA|^2 \cdot x = \frac{x}{2}                                                 \\
+    S_{\triangle OAL} = \frac{1}{2} \cdot |OA| \cdot |LA| = \frac{\tg{x}}{2}
+\end{gather*}
+Тогда, заменив площади в неравенстве, получим:
+\begin{align*}
+     &  &
+    \dfrac{\sin{x}}{2} < \dfrac{x}{2} < \dfrac{\tg{x}}{2}
+\end{align*}
+
+Так как при \(x \to +0: \sin{x} > 0, x > 0, \tg{x} > 0\), получим:
+\begin{align*}
+     &  &
+    \dfrac{1}{\tg{x}} < \dfrac{1}{x} < \dfrac{1}{\sin{x}} \iff \cos{x} < \dfrac{\sin{x}}{x} < 1
+\end{align*}
+
+Перейдем к пределу:
+\begin{align*}
+     &  &
+    \lim_{x \to +0}{\cos{x}} \leq \lim_{x \to +0}{\dfrac{\sin{x}}{x}} \leq 1 \implies 1 \leq \lim_{x \to +0}{\dfrac{\sin{x}}{x}} \leq 1 \implies \lim_{x \to +0}{\dfrac{\sin{x}}{x}} = 1
+\end{align*}
+
+Найдем левый односторонний предел. Пусть \(t = -x \implies t \to +0\):
+\begin{align*}
+     &  &
+    \lim_{x \to -0}{\dfrac{\sin{x}}{x}} = \lim_{t \to +0}{\dfrac{\sin{(-t)}}{-t}} = \lim_{t \to +0}{\dfrac{-\sin{t}}{-t}} = \lim_{t \to +0}{\dfrac{\sin{t}}{t}} = 1
+\end{align*}
+
+Правый и левый односторонний пределы существуют и равны \(1\), следовательно и сам предел равен 1.
+
+\subsubsection*{Следствия}
+\begin{enumerate}
+    \item {\(\lim_{x \to 0}{\dfrac{\tg{x}}{x}} = 1\)}
+    \item {\(\lim_{x \to 0}{\dfrac{\arcsin{x}}{x}} = 1\)}
+    \item {\(\lim_{x \to 0}{\dfrac{\arctg{x}}{x}} = 1\)}
+    \item {\(\lim_{x \to 0}{\dfrac{1 - \cos{x}}{\frac{x^2}{2}}} = 1\)}
+\end{enumerate}
+
+\newpage
+
+\section{Второй замечательный предел}\label{sec:limit_2}
+\begin{align*}
+     &  &
+    \lim_{x \to \infty}{\Big(1 + \frac{1}{x}\Big)^x} = e \text{ или } \lim_{x \to 0}{(1 + x)^\frac{1}{x}} = e
+\end{align*}
+
+\subsubsection*{Доказательство}
+Сначала докажем теорему для натуральных значений \(x\):
+\begin{align*}
+     &  &
+    x_n = \Big(1 + \frac{1}{n}\Big)^n; n \in \mathbb{N}
+\end{align*}
+
+По формуле бинома Ньютона:
+\begin{align*}
+    (a + b)^n & = a^n + \frac{n}{1} \cdot a^{n - 1} + \frac{n(n - 1)}{1 \cdot 2} \cdot a^{n - 2} \cdot b^2 + ... + \\
+              & + \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot b^n
+\end{align*}
+
+Полагая \(a = 1, b = \dfrac{1}{n}\), получим:
+\begin{align*}
+    \Big(1 + \frac{1}{n}\Big)^n & = 1 + \frac{n}{1} \cdot \frac{1}{n} + \frac{n(n - 1)}{1 \cdot 2} \cdot \frac{1}{n^2} +
+    \frac{n(n - 1)(n - 2)}{1 \cdot 2 \cdot 3} \cdot \frac{1}{n^3} + ... +                                                                                                                             \\
+                                & +                            \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot \frac{1}{n^n}                                        \\
+    \Big(1 + \frac{1}{n}\Big)^n & = 1 + 1 + \frac{1}{1 \cdot 2} \cdot \Big(1 - \frac{1}{n}\Big) + \frac{1}{1 \cdot 2 \cdot 3} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) + ... + \\
+                                & + \frac{1}{1 \cdot 2 \cdot 3 ... \cdot n} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) \cdot ... \cdot \Big(1 - \frac{n - 1}{n}\Big)
+\end{align*}
+
+С увеличением \(n\) число полож. слагаемых в правой части увеличивается. Кроме того, при увеличении \(n\) число  \(\frac{1}{n}\) убывает. Следовательно величины \(\Big(1 - \dfrac{1}{n}\Big), \Big(1 - \dfrac{2}{n}\Big), ...\) возрастают, а значит и последовательность является возрастающей.
+
+Заметим, что \(\Big(1 + \frac{1}{n}\Big)^n \geq 2, n \in \mathbb{N}\).
+
+Покажем, что последовательность ограничена, заменив каждую скобку в правой части на единицу:
+\begin{align*}
+     &  &
+    \Big(1 + \frac{1}{n}\Big)^n < 1 + 1 + \frac{1}{1 \cdot 2} + \frac{1}{1 \cdot 2 \cdot 3} + ... + \frac{1}{1 \cdot 2 \cdot 3 \cdot ... \cdot n}
+\end{align*}
+Усилим полученное неравенство, заменив \(3, 4, 5, ...\), стоящие в знаменателях дробей числом  \(2\) :
+\begin{align*}
+     &  &
+    \Big(1 + \frac{1}{n}\Big)^n < 1 + \Big(1 + \frac{1}{2} + \frac{1}{2^2} + ... + \frac{1}{2^{n - 1}}\Big)
+\end{align*}
+
+Заметим, что в скобках получилась геометрическая прогрессия, сумма которой равна \(2 \cdot \Big(1 - \dfrac{1}{2^n}\Big) < 2>\). А значит:
+\begin{align*}
+     &  &
+    2 \leq \Big(1 + \frac{1}{n}\Big)^n < 3
+\end{align*}
+
+На основании теоремы Вейерштрасса наша последовательность монотонно возрастает и ограничена, как следствие, имеет предел, равный \(e\):
+\begin{align*}
+    \lim_{n \to \infty}{\Big(1 + \frac{1}{n}\Big)^n}
+\end{align*}
+
+
+\subsubsection*{Следствия}
+\begin{enumerate}
+    \item {\(\displaystyle{\lim_{x \to 0}{(1 + x)^{\frac{1}{x}}} = e}\)}
+    \item {\(\displaystyle{\lim_{x \to \infty}{\Big(1 + \dfrac{k}{x}\Big)^x} = e^k}\)}
+    \item {\(\displaystyle{\lim_{x \to 0}{\dfrac{\ln{(1 + x)}}{x}} = 1}\)}
+    \item {\(\displaystyle{\lim_{x \to 0}{\dfrac{e^x - 1}{x}} = 1}\)}
+    \item {\(\displaystyle{\lim_{x \to 0}{\dfrac{a^x - 1}{x\ln{a}} = 1}}\) для \(a > 0, a \neq 1\)}
+    \item {\(\displaystyle{\lim_{x \to 0}{\dfrac{(1 + x)^k - 1}{kx}} = 1}\)}
+\end{enumerate}
+
 
 \end{document}
