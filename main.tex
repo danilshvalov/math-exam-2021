@@ -7,7 +7,7 @@
 \usepackage{indentfirst}
 \usepackage{caption}
 \usepackage{wrapfig}
-\usepackage{xcolor}
+\usepackage{xcolor,soul,lipsum}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{hyperref}
@@ -39,23 +39,34 @@
 
 \providecommand{\pgfsyspdfmark}[3]{}
 
+\newtheoremstyle{numbered}{}{}{}{}{}{}{.5em}{\textbf{#1\;#2.}\;#3}
+\theoremstyle{numbered}
+\newtheorem{property}{Свойство}[section]
+\renewcommand{\theproperty}{\arabic{property}}
+
 \newtheoremstyle{named}{}{}{}{}{\bfseries}{.}{.5em}{#1\if\relax\detokenize{#3}\relax\else\;#3\fi}
 
 \theoremstyle{named}
 \newtheorem*{theorem}{Теорема}
 
-\pagestyle{plain}
+\theoremstyle{named}
+\newtheorem*{consequence}{Следствие}
+
+\theoremstyle{named}
+\newtheorem*{definition}{Определение}
 
 \theoremstyle{named}
 \newtheorem*{note}{Замечание}
 
 \newcommand{\newpar}{$ $\par\nobreak\ignorespaces}
 
-\renewenvironment{proof}[1][]{\noindent\textbf{Доказательство\if\relax\detokenize{#1}\relax\else\;#1\fi.} \newpar}{\bigskip}
+\newenvironment{breakenv}[2][]{\noindent\textbf{#1\if\relax\detokenize{#2}\relax\else\;#2\fi.} \newpar}{\bigskip}
 
+\renewenvironment{proof}[1][]{\breakenv{Доказательство}{#1}}
 
 \renewcommand\qedsymbol{}
 
+\pagestyle{plain}
 \setmainfont{PT Serif}
 
 \titleformat{\section}
@@ -66,7 +77,7 @@
 
 \titlecontents{chapter}% <section-type>
 [0pt]% <left>
-{}% <above-code>
+{\vspace{0.5cm}}% <above-code>
 {\bfseries\chaptername\ \thecontentslabel.\ }% <numbered-entry-format>
 {}% <numberless-entry-format>
 {\bfseries\hfill\contentspage}
@@ -82,6 +93,8 @@
     pdftitle={Ответы на билеты по математике 2021},
     pdfpagemode=FullScreen,
 }
+
+\newcommand{\plink}[2]{\hyperref[#1]{\color{blue}\underline{#2}}}
 
 \captionsetup[figure]{labelformat=empty, labelsep=none}
 \graphicspath{ {./images/} }
@@ -113,8 +126,6 @@
     \hypersetup{linkcolor=black}
     \tableofcontents
 }
-
-
 
 \chapter{Линейная алгебра}
 
@@ -153,8 +164,6 @@
 \textbf{Размерностью векторного пространства} называется число, равное максимальному количеству линейно \textbf{независимых} векторов в этом пространстве.
 
 \textbf{Базис векторного пространства} – это упорядоченная совокупность линейно \textbf{независимых} векторов этого пространства, число которых равно размерности пространства.
-
-
 
 \section{Скалярное произведение векторов и его свойства. Проекции}\label{sec:scalar-multiply}
 
@@ -214,7 +223,7 @@
 \begin{enumerate}
     \item \((\overrightarrow{a}, \overrightarrow{b}) = (\overrightarrow{b}, \overrightarrow{a})\)
 
-    \item \((\overrightarrow{a} + \overrightarrow{b}, \overrightarrow{c}) = (\overrightarrow{a}, \overrightarrow{c}) + (\overrightarrow{b} + \overrightarrow{c})\)
+    \item \((\overrightarrow{a} + \overrightarrow{b}, \overrightarrow{c}) = (\overrightarrow{a}, \overrightarrow{c}) + (\overrightarrow{b}, \overrightarrow{c})\)
 
     \item \((\lambda \cdot \overrightarrow{a}, \overrightarrow{b}) = \lambda \cdot (\overrightarrow{a}, \overrightarrow{b})\), где \(\lambda \in R\).
 
@@ -228,8 +237,6 @@
 
     \item Угол между двумя ненулевыми векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\) является острым тогда и только тогда, когда \((\overrightarrow{a}, \overrightarrow{b}) > 0\); и является тупым – когда \((\overrightarrow{a}, \overrightarrow{b}) < 0\).
 \end{enumerate}
-
-
 
 \section{Свойства определителей}\label{sec:det}
 
@@ -379,8 +386,6 @@
     \det (AB) = \det A \cdot \det B
 \end{gather*}
 
-
-
 \section{Системы координат. преобразования сдвига и поворота}
 \label{sec:coordinate_systems}
 
@@ -443,7 +448,6 @@
     \item Угол \(\varphi\) не определен, если \(r = 0\).
 \end{itemize}
 
-
 \subsection*{Цилиндрическая система координат}
 Цилиндрические координаты — трёхмерный аналог полярных координат,
 являющуюся расширением полярной системы координат путём добавления третьей координаты (обычно обозначаемой \(h\) или \(z\)), которая задаёт высоту точки над плоскостью.
@@ -504,8 +508,6 @@
     \item Угол \(\varphi\) неопределен для граничных значений \(\theta = 0\) и \(\theta = \pi\) (или для \(\theta = \pm \dfrac{\pi}{2}\), при \(-\dfrac{\pi}{2} \leq \theta \leq \dfrac{\pi}{2}\))
 \end{itemize}
 
-
-
 \section{Плоскость и ее уравнения}\label{sec:plane}
 
 \textbf{Плоскость} – это геометрическая фигура, состоящая из отдельных точек. Каждой точке в трехмерном пространстве соответствуют координаты, которые задаются тремя числами. Уравнение плоскости устанавливает зависимость между координатами всех точек.
@@ -546,8 +548,6 @@
 \end{gather*}
 
 % TODO добавить доказательство
-
-
 
 \section{Прямая в пространстве и ее уравнения}\label{sec:line_in_space}
 Уравнение прямой на плоскости в прямоугольной системе координат \(Oxy\) – это линейное уравнение с переменными \(x\) и \(y\), которому отвечают координаты всех точек прямой и не удовлетворяют координаты никаких прочих точек.
@@ -600,8 +600,6 @@
 \end{gather*}
 
 что является уравнением прямой в пространстве, которая проходит через две заданные точки.
-
-
 
 \section{Прямая на плоскости: уравнение через две точки, каноническое, параметрическое, общее, в отрезках на осях}\label{sec:line_on_plane}
 
@@ -704,8 +702,6 @@
 
 Это — уравнение прямой в отрезках на осях, так как числа m и n соответствуют длинам отрезков (с соответствующими знаками), которые прямая отсекает на осях координат (считая от начала отсчёта).
 
-
-
 \section{Условия параллельности и перпендикулярности плоскостей и прямых в пространстве}
 \label{sec:parallel_perpendicular_planes}
 
@@ -727,7 +723,7 @@
 \subsection*{Параллельность и перпендикулярность прямых в пространстве}
 В пространстве для прямых действуют те же условия, что и на плоскости, добавляется лишь новая координата.
 
-\hyperref[sec:parallel_perpendicular_lines]{\underline{Перейти к параллельности и перпендикулярности прямых в пространстве}}
+\plink{sec:parallel_perpendicular_lines}{Перейти к параллельности и перпендикулярности прямых в пространстве}
 
 \subsection*{Параллельность и перпендикулярность прямой и плоскости}
 Пусть есть прямая:
@@ -753,8 +749,6 @@
 \begin{gather*}
     \frac{A}{m} = \frac{B}{n} = \frac{C}{p}
 \end{gather*}
-
-
 
 \section{Условия параллельности и перпендикулярности прямых на плоскости}
 \label{sec:parallel_perpendicular_lines}
@@ -801,7 +795,6 @@
     \item[—]{\textbf{Параллельны}, если \(\dfrac{m_1}{m_2} = \dfrac{n_1}{n_2}\)}
 \end{itemize}
 
-
 % Рассмотрим прямую с, которая пересекает две прямые а и b и образует с ними восемь углов.
 % Такую прямую с называют — секущая.
 % Пары углов, которые образует секущая, также имеют названия.
@@ -814,10 +807,6 @@
 %     \item {Если соответственные углы равны (4 и 6, 3 и 5)}
 %     \item {Сумма внутренних односторонних углоав равна 180\textdegree}
 % \end{enumerate}
-
-
-
-
 
 \section{Парабола. Определение, вывод уравнения, характеристики}\label{sec:parabola}
 
@@ -882,8 +871,6 @@
     \item[—]{Все параболы подобны. Расстояние между фокусом и директрисой определяет масштаб;}
 \end{itemize}
 
-
-
 \chapter{Математический анализ}
 
 \section{Вещественная ось. Бесконечность. Окрестность точки}%
@@ -936,7 +923,143 @@
     \lim_{x \to x_0}{f(x)} = A \iff \Big[ \forall O(A): \exists \overset{\circ}{O}(x_0): f(\overset{\circ}{O}(x_0) \subseteq O(A)) \Big]
 \end{gather*}
 
+\section{Бесконечно малые и бесконечно большие функции}%
+\label{sec:Бесконечно малые функции и их свойства}
 
+\subsection*{Бесконечно малые функции и их свойства}%
+\label{sub:Бесконечно малые функции и их свойства}
+
+\begin{definition}
+    Функция \(\alpha(x)\) называется \textbf{бесконечно малой} при \(x \to x_0\), если \(\displaystyle \exists \lim_{x \to x_0}{\alpha(x)}\) и \(\displaystyle \lim_{x \to x_0}{\alpha(x)} = 0\).
+\end{definition}
+
+\subsection*{Свойства бесконечно малых функций}
+
+\begin{property}
+    \newpar
+    Пусть есть бесконечно малая функция \(\alpha(x)\) при \(x \to x_0\). Также есть функция \(g(x)\), ограниченная в некоторой проколотой окрестности \(\overset{\circ}{U}_g(x_0)\). Тогда их произведение есть бесконечно малая функция:
+    \[
+        \lim_{x \to x_0}{(\alpha(x) \cdot g(x))} = 0
+    \]
+\end{property}
+
+\begin{proof}
+    Так как \(g(x)\) ограничена в \(\overset{\circ}{U}_g(x_0)\), то \(\exists M: \forall x \in \overset{\circ}{U}_g(x_0) \implies |g(x)| \leq M\).
+
+    Если \(\displaystyle \exists \lim_{x \to x_0}{\alpha(x)}\), то \(\exists \overset{\circ}{U}_\alpha (x_0)\), на которой определена функция \(\alpha(x)\).
+
+    Тогда \(\forall \varepsilon > 0: x \in \overset{\circ}{U}_\alpha(x_0) \implies |\alpha(x)| < \dfrac{\varepsilon}{M}\).
+
+    Пусть \(\overset{\circ}{U}(x_0) = \min(\overset{\circ}{U}_\alpha(x_0), \overset{\circ}{U}_g(x_0))\).
+
+    Тогда
+    \(
+    \forall \varepsilon > 0: x \in \overset{\circ}{U}(x_0) \implies |\alpha(x) \cdot g(x)| < \dfrac{\varepsilon}{M} \cdot M = \varepsilon
+    \), т. е. \(|\alpha(x) \cdot g(x)| < \varepsilon\).
+
+    Следовательно:
+    \[
+        \lim_{x \to x_0}{(\alpha(x) \cdot g(x))} = 0
+    \]
+\end{proof}
+
+\begin{note}
+    Из этого свойства следует, что произведение б. м. ф. на число есть функция бесконечно малая.
+\end{note}
+
+\begin{property}
+    \newpar
+    Пусть \(\alpha(x)\) и \(\beta(x)\) — бесконечно малые функции при \(x \to x_0\). Тогда их \textbf{сумма}, \textbf{разность} и \textbf{произведение} являются также бесконечно малыми функциями при \(x \to x_0\).
+\end{property}
+
+\begin{proof}
+    Докажем, что сумма бесконечно малых функций являетсяя бесконечно малой функцией. Разность и произведение доказываются аналогично.
+
+    \(\alpha(x)\) б. м. ф. \(\implies \alpha(x)\) определена в некоторой окрестности \(\overset{\circ}{U}_\alpha(x_0)\)
+
+    Тогда \(\forall \varepsilon > 0: x \in \overset{\circ}{U}_\alpha(x_0) \implies |\alpha(x)| < \dfrac{\varepsilon}{2}\)
+
+    \(\beta(x)\) б. м. ф. \(\implies \beta(x)\) определена в некоторой окрестности \(\overset{\circ}{U}_\beta(x_0)\).
+
+    Тогда \(\forall \varepsilon > 0: x \in \overset{\circ}{U}_\beta(x_0) \implies |\beta(x)| < \dfrac{\varepsilon}{2}\)
+
+    Пусть \(\overset{\circ}{U}(x_0) = \min(\overset{\circ}{U}_\alpha(x_0), \overset{\circ}{U}_\beta(x_0))\)
+
+    Тогда \(\forall \varepsilon > 0: x \in \overset{\circ}{U}(x_0) \implies |\alpha(x) + \beta(x)| < |\alpha(x)| + |\beta(x)| < \dfrac{\varepsilon}{2} + \dfrac{\varepsilon}{2} = \varepsilon\)
+
+    Следовательно:
+    \[
+        \lim_{x \to x_0}{(\alpha(x) + \beta(x))} = 0
+    \]
+\end{proof}
+
+\begin{property}
+
+\end{property}
+
+\subsection*{Бесконечно большие функции и их свойства}%
+\label{sec:Бесконечно большие функции и их свойства}
+
+\begin{definition}
+    Функция \(f(x)\) называется \textbf{бесконечно большой} при \(x \to x_0\), если \(\displaystyle \exists \lim_{x \to x_0}{f(x)}\) и \(\displaystyle \lim_{x \to x_0}{f(x)} = \infty\).
+\end{definition}
+
+\begin{theorem}[о сумме ограниченной функции и бесконечно большой]
+    \textbf{Сумма} или \textbf{разность} ограниченной функции на некоторой проколотой окрестности точки \(x_0\) и бесконечно большой функции при \(x \to x_0\) является бесконечно большой функцией при \(x \to x_0\).
+\end{theorem}
+% TODO добавить доказательство
+
+\begin{theorem}[о произведении ограниченной снизу функции на бесконечно большую]
+    % TODO добавить определение
+\end{theorem}
+% TODO добавить доказательство
+
+\begin{theorem}[о частном от деления ограниченной функции на бесконечно большую]
+    % TODO добавить определение
+\end{theorem}
+% TODO добавить доказательство
+
+\begin{theorem}[о частном от деления ограниченной снизу функции на бесконечно малую]
+    % TODO добавить определение
+\end{theorem}
+% TODO добавить доказательство
+
+\subsection*{Связь между бесконечно большими и бесконечно малыми функциями}
+\label{sec:Связь между бесконечно большими и бесконечно малыми функциями}
+\begin{itemize}
+    \item {Если функция \(f(x)\) является бесконечно большой при \(x \to x_0\), то функция \(\dfrac{1}{f(x)}\) является бесконечно малой при \(x \to x_0\).}
+    \item {Если функция \(\alpha(x)\)} является бесконенчо малой при \(x \to x_0\) и \(\alpha(x) \neq 0\), то функция \(\dfrac{1}{\alpha(x)}\) является бесконечно большой при \(x \to x_0\).
+\end{itemize}
+
+Связь между бесконечно малой и бесконечно большой функцией можно выразить символическим образом:
+\[
+    \frac{1}{\infty} = 0 \hspace{1cm} \frac{1}{0} = \infty
+\]
+Следовательно:
+\begin{gather*}
+    \frac{1}{+0} = +\infty \hspace{1cm} \frac{1}{-0} = -\infty \\
+    \frac{1}{+ \infty} = +0 \hspace{1cm} \frac{1}{-\infty} = -0
+\end{gather*}
+
+\subsection*{Арифметические свойства}%
+\label{sub:Арифметические свойства}
+
+Пусть существуют пределы функций:
+\begin{gather*}
+    \lim_{x \to x_0}{g(x)} = a \neq \infty \\
+    \lim_{x \to x_0}{y(x)} = b \neq 0 \\
+    \lim_{x \to x_0}{\alpha(x)} = 0 \\
+    \lim_{x \to x_0}{f(x)} = \infty
+\end{gather*}
+
+Тогда функция \(\alpha(x)\) является бесконечно малой при \(x \to x_0\), а функция \(f(x)\) — бесконечно большой при \(x \to x_0\).
+\begin{gather*}
+    \lim_{x \to x_0}{(g(x) \pm f(x))} = \infty \\
+    \lim_{x \to x_0}{(g(x) \cdot \alpha(x))} = 0 \\
+    \lim_{x \to x_0}{(y(x) \cdot f(x))} = \infty \\
+    \lim_{x \to x_0}{\frac{g(x)}{f(x)}} = 0 \\
+    \lim_{x \to x_0}{\frac{y(x)}{\alpha(x)}} = \infty
+\end{gather*}
 
 \section{Сравнение пределов. Теорема о двух милиционерах}%
 \label{sec:Сравнение пределов. Теорема о двух милиционерах}
@@ -1027,8 +1150,6 @@
     \item {\(\lim_{x \to 0}{\dfrac{1 - \cos{x}}{\frac{x^2}{2}}} = 1\)}
 \end{enumerate}
 
-
-
 \section{Второй замечательный предел. Число \(e\)}\label{sec:limit_2}
 \begin{gather*}
     \lim_{x \to \infty}{\Big(1 + \frac{1}{x}\Big)^x} = e \text{ или } \lim_{x \to 0}{(1 + x)^\frac{1}{x}} = e
@@ -1078,7 +1199,6 @@
     \lim_{n \to \infty}{\Big(1 + \frac{1}{n}\Big)^n} = e
 \end{gather*}
 
-
 \subsubsection*{Следствия}
 \begin{enumerate}
     \item {\(\displaystyle{\lim_{x \to 0}{(1 + x)^{\frac{1}{x}}} = e}\)}
@@ -1111,31 +1231,29 @@
     \item {Число \(e\) разлагается в бесконечную дробь}
 \end{enumerate}
 
-
-
 \section{Теоремы Вейерштрасса}%
 \label{sec:Теоремы Вейерштрасса}
 
 \begin{theorem}[Вейерштрасса для непрерывных функций]
     \newpar
-    Если функция \(f(x)\) непрерывна на всем \([a; b]\), то она ограничена на нем и притом \(\exists \min{(f(x))}, \max{(f(x))}\), т. е. \(\exists \; x_m, x_M \in [a; b]: f(x_m) \leq f(x) \leq f(x_M) \; \forall x \in [a; b]\).
+    Если функция \(f(x)\) непрерывна на всем \([a, b]\), то она ограничена на нем и притом \(\exists \min{(f(x))}, \max{(f(x))}\), т. е. \(\exists \; x_m, x_M \in [a, b]: f(x_m) \leq f(x) \leq f(x_M) \; \forall x \in [a, b]\).
 \end{theorem}
 
 \begin{theorem}[Вейерштрасса для полунепрерывных функций]
     \newpar
-    Если функция \(f(x): [a; b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{сверху}, то:
+    Если функция \(f(x): [a, b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{сверху}, то:
     \[
         \begin{cases}
-            M = \underset{x \in [a; b]}{\sup}f(x) < +\infty \\
-            \exists x_M \in [a; b]: f(x_M) = M
+            M = \underset{x \in [a, b]}{\sup}f(x) < +\infty \\
+            \exists x_M \in [a, b]: f(x_M) = M
         \end{cases}
     \]
 
-    Если функция \(f(x): [a; b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{снизу}, то:
+    Если функция \(f(x): [a, b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{снизу}, то:
     \[
         \begin{cases}
-            m = \underset{x \in [a; b]}{\inf}f(x) > -\infty \\
-            \exists x_m \in [a; b]: f(x_m) = m
+            m = \underset{x \in [a, b]}{\inf}f(x) > -\infty \\
+            \exists x_m \in [a, b]: f(x_m) = m
         \end{cases}
     \]
 \end{theorem}
@@ -1144,35 +1262,31 @@
     % TODO добавить доказательство
 \end{proof}
 
-
-
 \section{Теорема Ролля}%
 \label{sec:Теорема Ролля}
 \begin{theorem}[Ролля]
-    Если функция \(f(x)\) непрерывна на \([a; b]\), дифференцируема на \((a; b)\) и \(f(a) = f(b)\), то найдется такая точка \(c \in (a; b)\), что \(f'(c) = 0\).
+    Если функция \(f(x)\) непрерывна на \([a, b]\), дифференцируема на \((a, b)\) и \(f(a) = f(b)\), то найдется такая точка \(c \in (a, b)\), что \(f'(c) = 0\).
 \end{theorem}
 
 \begin{proof}
-    Если \(f(x)\) постоянна на всем \([a; b]\), то утверждение верно и очевидно, поскольку \(f'(x) = 0 \; \forall x \in (a; b)\).
+    Если \(f(x)\) постоянна на всем \([a, b]\), то утверждение верно и очевидно, поскольку \(f'(x) = 0 \; \forall x \in (a, b)\).
 
-    Если же нет, поскольку \(f(a) = f(b)\), то согласно \hyperref[sec:Теорема Вейерштрасса]{теореме Вейерштрасса}, \(\exists \min{(f(x)), \max{(f(x))}}\), то есть имеет в этой точке локальный экстремум, и по лемме Ферма производная в этой точке равна 0.
+    Если же нет, поскольку \(f(a) = f(b)\), то согласно \plink{sec:Теоремы Вейерштрасса}{теореме Вейерштрасса}, \(\exists \min{(f(x)), \max{(f(x))}}\), то есть имеет в этой точке локальный экстремум, и по лемме Ферма производная в этой точке равна 0.
 
-    Поскольку \(f(x)\) непрерывна на \([a; b]\)
+    Поскольку \(f(x)\) непрерывна на \([a, b]\)
 \end{proof}
-
-
 
 \section{Теоремы Лагранжа и Коши}%
 \label{sec:Теоремы Лагранжа и Коши}
 \begin{theorem}[Лагранжа]
-    Если функция \(f(x)\) непрерывна на \([a; b]\) и дифференцируема на \((a; b)\), то найдется такая точка \(c \in (a; b)\), что
+    Если функция \(f(x)\) непрерывна на \([a, b]\) и дифференцируема на \((a, b)\), то найдется такая точка \(c \in (a, b)\), что
     \[
         \frac{f(b) - f(a)}{b - a} = f'(c).
     \]
 \end{theorem}
 
 \begin{theorem}[Коши]
-    Пусть функции \(f(x)\) и \(g(x)\) непрерывны на \([a; b]\) и дифференцируемы на \((a; b)\), причем \(g'(x) \neq 0 \;\; \forall x \in (a; b)\). Тогда найдется такая точка \(c \in (a; b)\), что
+    Пусть функции \(f(x)\) и \(g(x)\) непрерывны на \([a, b]\) и дифференцируемы на \((a, b)\), причем \(g'(x) \neq 0 \;\; \forall x \in (a, b)\). Тогда найдется такая точка \(c \in (a, b)\), что
     \[
         \frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}.
     \]
@@ -1183,11 +1297,98 @@
 \end{note}
 
 \begin{proof}[теоремы Коши]
-    Заметим, что \(g(a) \neq g(b)\), так как иначе по теореме Ролля \(\exists \; t \in (a; b): g'(t) = 0\).
+    Заметим, что \(g(a) \neq g(b)\), так как иначе по теореме Ролля \(\exists \; t \in (a, b): g'(t) = 0\).
 
-    Введем новую функцию \(h(x) = f(x) - Kg(x)\), где \(K = \dfrac{f(b) - f(a)}{g(b) - g(a)}\). Также заметим, что \(h(a) = h(b)\), а потому функция \(h(x)\) удовлетворяет условиям теоремы Ролля. Значит, найдется такая точка \(c \in (a; b)\), что \(h'(c) = 0 \iff f'(c) = Kg'(c)\). Отсюда получим:
+    Введем новую функцию \(h(x) = f(x) - Kg(x)\), где \(K = \dfrac{f(b) - f(a)}{g(b) - g(a)}\). Также заметим, что \(h(a) = h(b)\), а потому функция \(h(x)\) удовлетворяет условиям теоремы Ролля. Значит, найдется такая точка \(c \in (a, b)\), что \(h'(c) = 0 \iff f'(c) = Kg'(c)\). Отсюда получим:
     \begin{gather*}
         K = \frac{f'(c)}{g'(c)} \iff \frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}
+    \end{gather*}
+\end{proof}
+
+\section{Правило Лопиталя}%
+\label{sec:Правило Лопиталя}
+
+Правило Лопиталя действует одинаково как для неопределенности вида \(0/0\), так и для \(\infty/\infty\).
+Однако их доказательства несколько различаются, поэтому они будут рассмотрены отдельно.
+
+\begin{theorem}[«Правило Лопиталя» (\(0/0\) и  \(\infty/\infty\))]
+    \newpar \vspace{0.1cm}
+    Если функции \(f(x)\) и \(g(x)\) определены на \([a, b]\), дифференцируемы на \((a, b)\) и для них выполняются следующие условия:
+    \begin{enumerate}[leftmargin=3em]
+        \item {\(\displaystyle\lim_{x \to a}{f(x)} = \lim_{x \to a}{g(x)} = 0 \text{ или } \infty\)}
+        \item {\(g'(x) \neq 0 \; \forall x \in (a, b)\)}
+        \item {\(\displaystyle \exists \lim_{x \to a}{\dfrac{f'(x)}{g'(x)}}\)}
+    \end{enumerate}
+
+    Тогда существует \(\displaystyle\lim_{x \to a}{\dfrac{f(x)}{g(x)}} = \lim_{x \to a}{\dfrac{f'(x)}{g'(x)}}\)
+\end{theorem}
+
+\begin{proof}[первого правила Лопиталя (\(0/0\))]
+    Доопределим или переопределим функции \(f(x)\) и \(g(x)\) в точке \(a\):
+    \[
+        f(a) = g(a) = 0
+    \]
+
+    На пределы и производные это никак не повлияет, поскольку они не зависят от того, чему равны функции в точке \(a\). Тогда по \plink{sec:Теоремы Лагранжа и Коши}{теореме Коши}:
+    \[
+        \frac{f(x)}{g(x)} =
+        \frac{f(x) - f(a)}{g(x) - g(a)} =
+        \frac{f'(c)}{g'(c)}
+    \]
+
+    где \(c \in (a, x)\).
+
+    Поскольку существует \(\displaystyle \lim_{x \to a}{\dfrac{f'(x)}{g'(x)}}\), который равен
+    \[
+        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{f'(c)}{g'(c)}}
+    \]
+
+    Если \(x \to a\), то и \(c \to a\), т. к. \(a < c < x\), следовательно:
+    \[
+        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{f'(c)}{g'(c)}} =
+        \lim_{x \to a}{\frac{f'(x)}{g'(x)}}.
+    \]
+\end{proof}
+
+\begin{proof}[второго правила Лапиталя (\(\infty/\infty\))]
+    Функции \(\dfrac{1}{f(x)}\) и \(\dfrac{1}{g(x)}\) являются бесконечно малыми при \(x \to a\). Тогда по первому правилу Лопиталя:
+    \begin{gather*}
+        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{\dfrac{1}{g(x)}}{\dfrac{1}{f(x)}}} =
+        \lim_{x \to a}{\frac{\Big(\dfrac{1}{g(x)}\Big)'}{\Big(\dfrac{1}{f(x)}\Big)'}} =
+        \lim_{x \to a}{\frac{\dfrac{g'(x)}{g^2(x)}}{\dfrac{f'(x)}{f^2(x)}}} =
+        \lim_{x \to a}{\frac{g'(x)f^2(x)}{f'(x)g^2(x)}} =
+        \lim_{x \to a}{\frac{g'(x)}{f'(x)}} \cdot \Big(\lim_{x \to a}{\frac{f(x)}{g(x)}}\Big)^2
+    \end{gather*}
+    Следовательно:
+    \begin{gather*}
+        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{g'(x)}{f'(x)}} \cdot \Big(\lim_{x \to a}{\frac{f(x)}{g(x)}}\Big)^2 \\
+        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{f'(x)}{g'(x)}}
+    \end{gather*}
+\end{proof}
+
+\section{Теорема Ферма}%
+\label{sec:Теорема Ферма}
+
+\begin{theorem}[Ферма]
+    Если функция \(f(x)\) определена и дифференцируема на \((a, b)\) и \(f(c) = \max(f(x))\) или \(f(c) = \min(f(x))\), где \(c \in (a, b)\), тогда \(f'(c) = 0\).
+\end{theorem}
+
+\begin{proof}
+    Рассмотрим случай, когда \(f(c) = \max(f(x))\). Случай, когда \(c\) — точка минимума, доказывается аналогично. Производная \(f'(c)\) равна:
+    \[
+        f'(c) = \lim_{\Delta x \to 0}{\frac{f(c + \Delta x) - f(c)}{\Delta x}}
+    \]
+    \begin{gather*}
+        \begin{cases}
+            \Delta x > 0 \implies \dfrac{f(c + \Delta x) - f(c)}{\Delta x} \leq 0 \implies f'(c) \leq 0 \vspace{0.3cm} \\
+            \Delta x < 0 \implies \dfrac{f(c + \Delta x) - f(c)}{\Delta x} \geq 0 \implies f'(c) \geq 0
+        \end{cases}
+        \implies f'(c) = 0
     \end{gather*}
 \end{proof}
 
