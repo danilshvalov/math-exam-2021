@@ -17,19 +17,7 @@
 \usepackage{titletoc}
 \usepackage{tocvsec2}
 \usepackage{tocloft}
-% \usepackage{geometry}
-% \usepackage{emoji}
-% \usepackage{amsmath}
-% \usepackage{xcolor, cancel}
-% \usepackage{stackengine}
-% \usepackage{ulem}
-% \usepackage{amsthm}
-% \usepackage{tikz}
-% \usepackage{multicol}
-% \usepackage{pgfplots}
-% \usepackage{ragged2e}
-% \usepackage{xifthen}
-% \usepackage{unicode-math}
+\usepackage[b]{esvect}
 \usepackage[%
     left=0.8in,%
     right=0.8in,%
@@ -39,7 +27,16 @@
 
 \providecommand{\pgfsyspdfmark}[3]{}
 
+\newcommand{\newpar}{$ $\par\nobreak\ignorespaces}
+
+\newenvironment{breakenv}[3][]{\noindent\textbf{#1}#2#3.\newpar}{\bigskip}
+
 \newtheoremstyle{numbered}{}{}{}{}{}{}{.5em}{\textbf{#1\;#2.}\;#3}
+
+\newtheoremstyle{unnumbered}{}{}{}{}{}{}{.5em}{\textbf{#1.}\;#3.\par}
+
+\newenvironment{definition}[1][]{\noindent\textbf{Определение.}\if\relax\detokenize{#1}\relax\else\;#1.\newpar\fi\;}{\bigskip}
+
 \theoremstyle{numbered}
 \newtheorem{property}{Свойство}[section]
 \renewcommand{\theproperty}{\arabic{property}}
@@ -52,17 +49,13 @@
 \theoremstyle{named}
 \newtheorem*{consequence}{Следствие}
 
-\theoremstyle{named}
-\newtheorem*{definition}{Определение}
+% \theoremstyle{unnumbered}
+% \newtheorem*{definition}{Определение}
 
 \theoremstyle{named}
 \newtheorem*{note}{Замечание}
 
-\newcommand{\newpar}{$ $\par\nobreak\ignorespaces}
-
-\newenvironment{breakenv}[2][]{\noindent\textbf{#1\if\relax\detokenize{#2}\relax\else\;#2\fi.} \newpar}{\bigskip}
-
-\renewenvironment{proof}[1][]{\breakenv{Доказательство}{#1}}
+\renewenvironment{proof}[1][]{\breakenv[Доказательство]{\if\relax\detokenize{#1}\relax\else\;\fi}{#1}}
 
 \renewcommand\qedsymbol{}
 
@@ -133,32 +126,33 @@
 
 \subsection*{Определения}
 
-\subsubsection*{Линейная комбинация}
-Линейной комбинацией \(n\) векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, \ldots, \overrightarrow{a_n}\) называется сумма произведений этих векторов на произвольные вещественные числа, то есть выражения вида:
-\begin{gather*}
-    \lambda_1 \cdot \overrightarrow{a_1} + \lambda_2 \overrightarrow{a_2} + \ldots + \lambda_n + \overrightarrow{a_n}
-\end{gather*}
+\begin{definition}[Линейная комбинация]
+    Линейной комбинацией \(n\) векторов \(\vv{a_1}, \vv{a_2}, \ldots, \vv{a_n}\) называется сумма произведений этих векторов на произвольные вещественные числа, то есть выражения вида:
+    \begin{gather*}
+        \lambda_1 \cdot \vv{a_1} + \lambda_2 \vv{a_2} + \ldots + \lambda_n + \vv{a_n}
+    \end{gather*}
 
-где \(\lambda_1, \lambda_2, \ldots, \lambda_n\) — любые действительные числа.
+    где \(\lambda_1, \lambda_2, \ldots, \lambda_n\) — любые действительные числа.
+\end{definition}
 
 \subsubsection*{Линейно зависимая система векторов}
-Если для линейная комбинация \(\lambda_1 \cdot \overrightarrow{a_1} + \lambda_2 \cdot \overrightarrow{a_2} + ... + \lambda_n \cdot \overrightarrow{a_n}\) равна нулевому вектору (нулю) при условии, что хотя бы одно из чисел \(\lambda_1, \lambda_2, ..., \lambda_n\) отлично от нуля, то система векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) называется \textbf{линейно зависимой}.
+Если для линейная комбинация \(\lambda_1 \cdot \vv{a_1} + \lambda_2 \cdot \vv{a_2} + ... + \lambda_n \cdot \vv{a_n}\) равна нулевому вектору (нулю) при условии, что хотя бы одно из чисел \(\lambda_1, \lambda_2, ..., \lambda_n\) отлично от нуля, то система векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) называется \textbf{линейно зависимой}.
 
 \subsubsection*{Линейно \underline{не}зависимая система векторов}
-Если для линейная комбинация \(\lambda_1 \cdot \overrightarrow{a_1} + \lambda_2 \cdot \overrightarrow{a_2} + ... + \lambda_n \cdot \overrightarrow{a_n}\) равна нулевому вектору (нулю) \textbf{только тогда}, когда все числа \(\lambda_1, \lambda_2, ..., \lambda_n\) равны нулю, то система векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) называется \textbf{линейно независимой}.
+Если для линейная комбинация \(\lambda_1 \cdot \vv{a_1} + \lambda_2 \cdot \vv{a_2} + ... + \lambda_n \cdot \vv{a_n}\) равна нулевому вектору (нулю) \textbf{только тогда}, когда все числа \(\lambda_1, \lambda_2, ..., \lambda_n\) равны нулю, то система векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) называется \textbf{линейно независимой}.
 
 \subsection*{Свойства линейной зависимости и независимости}
 
-1. Если к линейно зависимой системе векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) добавить несколько векторов, то полученная система будет линейно \textbf{зависимой}.
+1. Если к линейно зависимой системе векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) добавить несколько векторов, то полученная система будет линейно \textbf{зависимой}.
 
-2. Если из линейно независимой системы векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) исключить несколько векторов, то полученная система будет линейно \textbf{независимой}.
+2. Если из линейно независимой системы векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) исключить несколько векторов, то полученная система будет линейно \textbf{независимой}.
 
-3. Если в системе векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) есть хотя бы один нулевой вектор, то такая система линейно зависимая.
+3. Если в системе векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) есть хотя бы один нулевой вектор, то такая система линейно зависимая.
 
-4. Если система векторов \(\overrightarrow{a_1}, \overrightarrow{a_2}, ..., \overrightarrow{a_n}\) линейно зависима, то хотя бы один из ее векторов линейно выражается через остальные. Если система векторов линейно независима, то ни один из векторов не выражается через остальные.
+4. Если система векторов \(\vv{a_1}, \vv{a_2}, ..., \vv{a_n}\) линейно зависима, то хотя бы один из ее векторов линейно выражается через остальные. Если система векторов линейно независима, то ни один из векторов не выражается через остальные.
 
 Из двух последних свойств следует важное утверждение:
-если система векторов содержит векторы \(\overrightarrow{a}\) и \(c \overrightarrow{a}\), где \(c\) – произвольное число, то она линейно зависима.
+если система векторов содержит векторы \(\vv{a}\) и \(c \vv{a}\), где \(c\) – произвольное число, то она линейно зависима.
 
 \subsection*{Размерность и базис}
 \textbf{Размерностью векторного пространства} называется число, равное максимальному количеству линейно \textbf{независимых} векторов в этом пространстве.
@@ -167,82 +161,238 @@
 
 \section{Скалярное произведение векторов и его свойства. Проекции}\label{sec:scalar-multiply}
 
-Скалярное произведение векторов \(\overrightarrow{a}\) и \(\overrightarrow{b}\) есть ничто иное как:
-\begin{gather*}
-    (\overrightarrow{a}, \overrightarrow{b}) = |\overrightarrow{a}| \cdot |\overrightarrow{b}| \cdot \cos{\varphi},
-\end{gather*}
+\begin{definition}
+    Скалярное произведение векторов \(\vv{a}\) и \(\vv{b}\) есть ничто иное как:
+    \begin{gather*}
+        (\vv{a}, \vv{b}) = |\vv{a}| \cdot |\vv{b}| \cdot \cos{\varphi},
+    \end{gather*}
 
-где \(\varphi\) — величина угла между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
+    где \(\varphi\) — величина угла между векторами \(\vv{a}\) и \(\vv{b}\).
+
+
+    Скалярное произведение обозначается либо как \(\vv{a} \cdot \vv{b}\), либо как \((\vv{a}, \vv{b})\).
+\end{definition}
+
+\subsection*{Свойства скалярного произведения}
+
+\begin{enumerate}
+    \item \((\vv{a}, \vv{b}) = (\vv{b}, \vv{a})\)
+
+    \item \((\vv{a} + \vv{b}, \vv{c}) = (\vv{a}, \vv{c}) + (\vv{b}, \vv{c})\)
+
+    \item \((\lambda \cdot \vv{a}, \vv{b}) = \lambda \cdot (\vv{a}, \vv{b})\), где \(\lambda \in R\).
+
+    \item \((\vv{a}, \vv{a}) \geq 0\), причем \((\vv{a}, \vv{a}) = 0 \iff |\vv{a}| = 0\)
+
+    \item \(\vv{a}^2 = |\vv{a}|^2\)
+
+    \item \(\cos{\varphi} = \dfrac{(\vv{a}, \vv{b})}{|\vv{a}| \cdot |\vv{b}|}\), где \(\varphi\) угол между векторами \(\vv{a}\) и \(\vv{b}\).
+
+    \item \(\vv{a} \perp \vv{b} \iff (\vv{a}, \vv{b}) = 0\)
+
+    \item Угол между двумя ненулевыми векторами \(\vv{a}\) и \(\vv{b}\) является острым тогда и только тогда, когда \((\vv{a}, \vv{b}) > 0\); и является тупым – когда \((\vv{a}, \vv{b}) < 0\).
+\end{enumerate}
 
 \subsection*{Проекции}
 
-Проекцией вектора \(\overrightarrow{AB}\) на ось \(\overrightarrow{b}\) — это длина отрезка \(A_1B_1 \in \overrightarrow{b}\) со знаком плюс, если направление вектора \(A_1B_1\) с направлением оси \(\overrightarrow{b}\), и со знаком минус, если эти направления противоположны.
+Проекцией вектора \(\vv{AB}\) на ось \(\vv{b}\) — это длина отрезка \(A_1B_1 \in \vv{b}\) со знаком плюс, если направление вектора \(A_1B_1\) с направлением оси \(\vv{b}\), и со знаком минус, если эти направления противоположны.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{projection.png}
 \end{center}
 
-Проекция вектора \(\overrightarrow{AB} = \overrightarrow{a}\) обозначается формулой: \(\text{Пр}_{\overrightarrow{b}}\overrightarrow{AB}\) или \(\text{Пр}_{\overrightarrow{b}}\overrightarrow{a}\)
+Проекция вектора \(\vv{AB} = \vv{a}\) обозначается формулой: \(\text{Пр}_{\vv{b}}\vv{AB}\) или \(\text{Пр}_{\vv{b}}\vv{a}\)
 
-Проекция вектора \(\overrightarrow{a}\) на ось \(\overrightarrow{b}\) выражается формулой:
+Проекция вектора \(\vv{a}\) на ось \(\vv{b}\) выражается формулой:
 \begin{gather*}
-    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = |\overrightarrow{a}| \cdot \cos{\varphi}
+    \text{Пр}_{\vv{b}}\vv{a} = |\vv{a}| \cdot \cos{\varphi}
 \end{gather*}
 
 С другой стороны:
 \begin{gather*}
-    \cos{\varphi} = \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{a}| \cdot |\overrightarrow{b}|}
+    \cos{\varphi} = \frac{\vv{a} \cdot \vv{b}}{|\vv{a}| \cdot |\vv{b}|}
 \end{gather*}
 
 Следовательно:
 \begin{gather*}
-    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = |\overrightarrow{a}| \cdot \cos{\varphi} \iff
-    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} = \frac{|\overrightarrow{a}| \cdot \overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{a}| \cdot \overrightarrow{b}} \iff
-    \text{Пр}_{\overrightarrow{b}}\overrightarrow{a} =
-    \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{|\overrightarrow{b}|}
+    \text{Пр}_{\vv{b}}\vv{a} = |\vv{a}| \cdot \cos{\varphi} \iff
+    \text{Пр}_{\vv{b}}\vv{a} = \frac{|\vv{a}| \cdot \vv{a} \cdot \vv{b}}{|\vv{a}| \cdot \vv{b}} \iff
+    \text{Пр}_{\vv{b}}\vv{a} =
+    \frac{\vv{a} \cdot \vv{b}}{|\vv{b}|}
 \end{gather*}
 
 \subsection*{Свойства проекций}
 \begin{enumerate}
     \item {
-          \(    \text{Пр}_{\overrightarrow{b}}(\overrightarrow{a_1} + \overrightarrow{a_2} + \overrightarrow{a_3}) =
-          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_1} +
-          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_2} +
-          \text{Пр}_{\overrightarrow{b}}\overrightarrow{a_3}
+          \(    \text{Пр}_{\vv{b}}(\vv{a_1} + \vv{a_2} + \vv{a_3}) =
+          \text{Пр}_{\vv{b}}\vv{a_1} +
+          \text{Пр}_{\vv{b}}\vv{a_2} +
+          \text{Пр}_{\vv{b}}\vv{a_3}
           \)
           }
     \item {
           \(
-          \text{Пр}_{\overrightarrow{b}}(\lambda \cdot \overrightarrow{a}) = \lambda \cdot \text{Пр}_{\overrightarrow{b}}\overrightarrow{a}
+          \text{Пр}_{\vv{b}}(\lambda \cdot \vv{a}) = \lambda \cdot \text{Пр}_{\vv{b}}\vv{a}
           \)
           }
 \end{enumerate}
 
-\subsection*{Свойства скалярного произведения}
+
+\section{Векторное произведение и его свойства}%
+\label{sec:Векторное произведение и его свойства}
+
+\begin{definition}
+    Векторным произведением \(\vv{a}\) на \(\vv{b}\) называется \(\vv{c}\), \textbf{длина} которого численно \textbf{равна площади параллелограмма}, построенного на \(\vv{a}\) и \(\vv{b}\), перпендикулярного к плоскости этих векторов и направленного так, чтоб \textbf{наименьшее вращение} от \(\vv{a}\) к \(\vv{b}\) вокруг вектора \(\vv{c}\) осуществлялось \textbf{против часовой} стрелки, если смотреть с конца \(\vv{c}\):
+
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{vector_product.png}
+    \end{center}
+
+    Векторное произведение обозначается либо как \(\vv{a} \times \vv{b}\), либо как \([\vv{a}, \vv{b}]\).
+\end{definition}
+
+\subsection*{Вычисление векторного произведения}%
+\label{sub:Вычисление векторного произведения}
+Векторное произведение двух векторов \(\vv{a} = (a_x; a_y; a_z)\) и \(\vv{b} = (b_x; b_y; b_z)\) в декартовой системе координат — это \textbf{вектор}, значение которого можно вычислить по формуле:
+\[
+    \vv{a} \times \vv{b} =
+    \begin{vmatrix}
+        i   & j   & k   \\
+        a_x & a_y & a_z \\
+        b_x & b_y & b_z
+    \end{vmatrix}
+    = (a_y b_z - a_z b_y)\vv{i} - (a_x b_z - a_z b_x)\vv{j} + (a_x b_y - a_y b_x)\vv{k}
+\]
+\[
+    \vv{a} \times \vv{b} = (a_y b_z - a_z b_y, a_z b_x - a_x b_z, a_x b_y - a_y b_x)
+\]
+
+\subsection*{Геометрический смысл векторного произведения}%
+\label{sub:Геометрический смысл векторного произведения}
+Модуль векторного произведения двух векторов \(\vv{a}\) и \(\vv{b}\) равен площади параллелограмма, построенного на этих векторах:
+\[
+    S_{\text{парал-ма}} = |\vv{a} \times \vv{b}|
+\]
+Как следствие, площадь треугольника, построенного на этих же векторах равна половине модуля векторного произведения:
+\[
+    S_{\Delta} = \frac{1}{2} |\vv{a} \times \vv{b}|
+\]
+
+\subsection*{Свойства векторного произведения}%
+\label{sub:Свойства векторного произведения}
 
 \begin{enumerate}
-    \item \((\overrightarrow{a}, \overrightarrow{b}) = (\overrightarrow{b}, \overrightarrow{a})\)
+    \item {\(\vv{a} \times \vv{b} = - \vv{b} \times \vv{a}\)}
 
-    \item \((\overrightarrow{a} + \overrightarrow{b}, \overrightarrow{c}) = (\overrightarrow{a}, \overrightarrow{c}) + (\overrightarrow{b}, \overrightarrow{c})\)
+    \item {\((k \vv{a}) \times \vv{b} = \vv{a} \times (k \vv{b}) = k(\vv{a} \times \vv{b})\)}
 
-    \item \((\lambda \cdot \overrightarrow{a}, \overrightarrow{b}) = \lambda \cdot (\overrightarrow{a}, \overrightarrow{b})\), где \(\lambda \in R\).
+    \item {\((\vv{a} + \vv{b}) \times \vv{c} = \vv{a} \times \vv{c} + \vv{b} \times \vv{c}\)}
 
-    \item \((\overrightarrow{a}, \overrightarrow{a}) \geq 0\), причем \((\overrightarrow{a}, \overrightarrow{a}) = 0 \iff |\overrightarrow{a}| = 0\)
+    \item {\(\vv{a} \neq \vv{0}, \vv{b} \neq \vv{0}, \vv{a} \times \vv{b} = 0 \implies \vv{a} || \vv{b}\)}
 
-    \item \(\overrightarrow{a}^2 = |\overrightarrow{a}|^2\)
-
-    \item \(\cos{\varphi} = \dfrac{(\overrightarrow{a}, \overrightarrow{b})}{|\overrightarrow{a}| \cdot |\overrightarrow{b}|}\), где \(\varphi\) угол между векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\).
-
-    \item \(\overrightarrow{a} \perp \overrightarrow{b} \iff (\overrightarrow{a}, \overrightarrow{b}) = 0\)
-
-    \item Угол между двумя ненулевыми векторами \(\overrightarrow{a}\) и \(\overrightarrow{b}\) является острым тогда и только тогда, когда \((\overrightarrow{a}, \overrightarrow{b}) > 0\); и является тупым – когда \((\overrightarrow{a}, \overrightarrow{b}) < 0\).
+    \item {\(\vv{a} \neq \vv{0}, \vv{b} \neq \vv{0}, \vv{c} = \vv{a} \times \vv{b} \implies \vv{c} \perp \vv{a}, \vv{c} \perp \vv{b} \)}
 \end{enumerate}
 
-\section{Свойства определителей}\label{sec:det}
+\section{Смешанное произведение векторов и его свойства}%
+\label{sec:Смешанное произведение векторов и его свойства}
+
+\begin{definition}
+    Смешанное произведение векторов — это скалярное произведение вектора \(\vv{a}\) на векторное произведение векторов \(\vv{b}\) и \(\vv{c}\):
+    \[
+        \vv{a} \cdot (\vv{b} \times \vv{c})
+    \]
+    Смешанное произведение обозначается либо как \(\vv{a} \cdot (\vv{b} \times \vv{c})\), либо как \((\vv{a}, \vv{b}, \vv{c})\).
+\end{definition}
+
+\subsection*{Вычисление смешанного произведения}%
+\label{sub:Вычисление смешанного произведения}
+
+Пусть даны векторы \(\vv{a} = (a_x, a_y, a_z)\), \(\vv{b} = (b_x, b_y, b_z)\), \(\vv{c} = (c_x, c_y, c_z)\), тогда их смешанное произведение в декартовой системе координат будет равно:
+\[
+    \vv{a} \cdot (\vv{b} \times \vv{c}) =
+    \begin{vmatrix}
+        a_x & a_y & a_z \\
+        b_x & b_y & b_z \\
+        c_x & c_y & c_z
+    \end{vmatrix}
+\]
+
+\subsection*{Геометрический смысл смешанного произведения}%
+\label{sub:Геометрический смысл смешанного произведения}
+Модуль смешанного произведения векторов \(\vv{a}\), \(\vv{b}\), \(\vv{c}\) равен объему параллелепипеда, образованного этими векторами:
+\[
+    V_{\text{парал-да}} = |\vv{a} \cdot (\vv{b} \times \vv{c})|
+\]
+
+Как следствие, объем пирамиды, образованной на этих же векторах равна одной шестой модуля смешанного произведения:
+\[
+    V_{\text{пирамиды}} = |\vv{a} \cdot (\vv{b} \times \vv{c})|
+\]
+
+\subsection*{Алгебраические свойства смешанного произведения}%
+\label{sub:Алгебраические свойства смешанного произведения}
+\begin{enumerate}
+    \item {\(\vv{a} \cdot (\vv{b} \times \vv{c}) = \vv{b} \cdot (\vv{c} \times \vv{a}) = \vv{c} \cdot (\vv{a} \times \vv{b})\)}
+
+    \item {\(\vv{a} \cdot (\vv{b} \times \vv{c}) = - \vv{a} \cdot (\vv{c} \times \vv{b})\)}
+
+    \item {\(\vv{a} \cdot (\vv{b} \times \vv{c}) = (\vv{a} \times \vv{b}) \cdot \vv{c}\)}
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item {Длины векторов \(\vv{a}\), \(\vv{b}\), \(\vv{c}\) и ориентация тройки не меняются.}
+
+        \item {Модули слева и справа равны, а ориентация изменилась при перестановке \(\vv{b}\) и \(\vv{c}\) местами.}
+
+        \item {Следует из свойств (1) и (2).}
+    \end{enumerate}
+\end{proof}
+
+
+\subsection*{Геометрические свойства смешанного произведения}%
+\label{sub:Геометрические свойства смешанного произведения}
+
+\begin{theorem}
+    \newpar
+    Векторы \(\vv{a}\), \(\vv{b}\), \(\vv{c}\) компланарны тогда и только тогда, когда их смешанное произведение равно нулю.
+\end{theorem}
+
+\begin{proof}
+    Пусть \((\vv{a}, \vv{b}, \vv{c}) = 0\), тогда может быть два случая:
+
+    \textbf{Случай 1.} \(\vv{b} \times \vv{c} = 0 \implies \vv{b} || \vv{c}\)
+    \[
+        \text{Тогда} \quad \exists k_1, k_2: \vv{c} = k_1 \vv{a} + k_2 \vv{b} \implies \text{коллинеарность — компланарность.}
+    \]
+
+    \textbf{Случай 2.} \(\vv{a} \perp (\vv{b} \times \vv{c})\)
+
+    Доказательство следует напрямую из векторного произведения:
+    \[
+        \vv{a} \perp (\vv{b} \times \vv{c}) \implies \vv{a} \subset \alpha_{(\vv{b}, \vv{c})} \implies \text{векторы компланарны}
+    \]
+
+    Верно и обратное:
+    \[
+        \vv{a}, \vv{b}, \vv{c} \text{ компланарны }, \vv{a} \perp (\vv{b} \times \vv{c}) \implies
+        \vv{a} \cdot (\vv{b} \times \vv{c}) = 0.
+    \]
+\end{proof}
+
+\subsection*{Алгебраические свойства смешанного произведения}%
+\label{sub:Алгебраические свойства смешанного произведения}
+
+\section{Определители 2-го и 3-го порядка. Разложение определителя по элементам строки.}%
+\label{sec:Определители 2-го и 3-го порядка}
+
+
+\section{Свойства определителей}%
+\label{sec:Свойства определителей}
 
 1. Определитель транспонированной матрицы равен определителю исходной матрицы: \(\det A^T = \det A\)
 
-2. Умножение всех элементов строки или столбца определителя на некоторое число \lambda равносильно умножееию определителя на это число:
+2. Умножение всех элементов строки или столбца определителя на некоторое число \(\lambda\) равносильно умножению определителя на это число:
 \begin{gather*}
     \begin{vmatrix}
         a_{11}         & a_{12}         & \dots a_{1j}         & \dots & a_{1n}         \\
@@ -386,6 +536,105 @@
     \det (AB) = \det A \cdot \det B
 \end{gather*}
 
+\section{Теорема Крамера}%
+\label{sec:Теорема Крамера}
+
+\textbf{Метод крамера} (правило Крамера) — способ решения систем линейных алгебраических уравнений с \textbf{числом уравнений равным числу неизвестных} с \underline{ненулевым} главным определителем матрицы коэффициентов системы (причём для таких уравнений решение существует и единственно).
+
+\begin{theorem}[Крамера]
+    \newpar
+    Для системы линейных уравнения вида:
+
+    \begin{gather*}
+        \begin{cases}
+            \begin{matrix}
+                a_{11}x_1 & +      & a_{12}x_2 & +      & \cdots & +      & a_{1n}x_n & =      & b_1    \\
+                a_{21}x_1 & +      & a_{22}x_2 & +      & \cdots & +      & a_{2n}x_n & =      & b_2    \\
+                \cdots    & \cdots & \cdots    & \cdots & \cdots & \cdots & \cdots    & \cdots & \cdots \\
+                a_{n1}x_1 & +      & a_{n2}x_2 & +      & \cdots & +      & a_{nn}x_n & =      & b_n
+            \end{matrix}
+        \end{cases}
+    \end{gather*}
+
+    Матрица коэффициентов:
+
+    \begin{equation*}
+        A = \left(
+        \begin{array}{cccc}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} & \cdots & a_{2n} \\
+            \cdots & \cdots & \cdots & \cdots \\
+            a_{n1} & a_{n2} & \cdots & a_{nn}
+        \end{array}
+        \right)
+    \end{equation*}
+
+    Матрица правых частей:
+
+    \begin{equation*}
+        B = \left(
+        \begin{array}{cccc}
+            b_{1}  \\
+            b_{2}  \\
+            \cdots \\
+            b_{n}
+        \end{array}
+        \right)
+    \end{equation*}
+
+    Справедливо утверждение:
+
+    \begin{equation*}
+        x_k = \frac{\det C_k}{\det A} \text{ где } k = 1, 2, \dots, n.
+    \end{equation*}
+
+    \(C_k\) — матрица, получаемая заменой \(k\)-го столбца матрицы \(A\) столбцом \(B\).
+\end{theorem}
+
+\begin{proof}
+
+    Рассмотрим систему уравнений:
+
+    \begin{gather*}
+        \begin{cases}
+            a_{11}x_1 + a_{12}x_2 = b_1 \\
+            a_{21}x_1 + a_{22}x_2 = b_2
+        \end{cases}
+    \end{gather*}
+
+    Тогда:
+
+    \begin{gather*}
+        \begin{cases}
+            x_1 = \dfrac{a_{11}b_1 - a_{12}b_1}{a_{11}a_{22} - a_{21}a_{12}} = \dfrac{\Delta{x_1}}{\Delta}
+            \vspace{0.5cm} \\
+            x_2 = \dfrac{a_{11}b_2 - a_{21}b_1}{a_{11}a_{22} - a_{21}a_{12}} = \dfrac{\Delta{x_2}}{\Delta}
+        \end{cases}
+    \end{gather*}
+
+    где:
+
+    \begin{equation*}
+        \Delta =
+        \begin{vmatrix}
+            a_{11} & a_{12} \\
+            a_{21} & a_{22}
+        \end{vmatrix}
+        \qquad
+        \Delta{x_1} =
+        \begin{vmatrix}
+            b_{1} & a_{12} \\
+            b_{2} & a_{22}
+        \end{vmatrix}
+        \qquad
+        \Delta{x_2} =
+        \begin{vmatrix}
+            a_{11} & b_{1} \\
+            a_{21} & b_{2}
+        \end{vmatrix}
+    \end{equation*}
+\end{proof}
+
 \section{Системы координат. преобразования сдвига и поворота}
 \label{sec:coordinate_systems}
 
@@ -415,7 +664,7 @@
 На схеме таковой точкой является точка \(O\).
 
 Пусть \(M (r, \varphi)\) — произвольная точка в полярной системе координат.
-Положение точки \(M\) фиксируется двумя числами: \textbf{радиусом} \(r = \overrightarrow{OM}\) и углом \(\varphi\) между полярной осью и вектором \(\overrightarrow{OM}\).
+Положение точки \(M\) фиксируется двумя числами: \textbf{радиусом} \(r = \vv{OM}\) и углом \(\varphi\) между полярной осью и вектором \(\vv{OM}\).
 Этот угол называется \textbf{полярным углом}.
 
 \begin{center}
@@ -530,7 +779,7 @@
 % TODO добавить доказательство
 
 \subsection*{Уравнение плоскости, проходящей через точку, перпендикулярно вектору нормали}
-Пусть у нас есть точка \(M(x_0, y_0, z_0)\), принадлежащая плоскости, и вектор нормали плоскости \(\overrightarrow{n} = (A, B, C)\). Тогда плоскость задается уравнением:
+Пусть у нас есть точка \(M(x_0, y_0, z_0)\), принадлежащая плоскости, и вектор нормали плоскости \(\vv{n} = (A, B, C)\). Тогда плоскость задается уравнением:
 \begin{gather*}
     A(x - x_0) + B(y - y_0) + C(z - z_0) = 0
 \end{gather*}
@@ -570,7 +819,7 @@
 \end{gather*}
 
 \subsection*{Канонические уравнения прямой в пространстве}
-Пусть у нас есть некоторая прямая \(l\), точка \(M_0(x_0, y_0, z_0)\), лежащая на прямой \(l\) и направляющий вектор \(\overrightarrow{r} = (m, n, p)\). Пусть \(M(x, y, z)\) — произвольная точка \(l\), тогда вектор \(\overrightarrow{M_0M} = (x - x_0, y - y_0, z - z_0)\) и вектор \(r\) коллинеарны. Из условия коллинеарности следует, что:
+Пусть у нас есть некоторая прямая \(l\), точка \(M_0(x_0, y_0, z_0)\), лежащая на прямой \(l\) и направляющий вектор \(\vv{r} = (m, n, p)\). Пусть \(M(x, y, z)\) — произвольная точка \(l\), тогда вектор \(\vv{M_0M} = (x - x_0, y - y_0, z - z_0)\) и вектор \(r\) коллинеарны. Из условия коллинеарности следует, что:
 \begin{gather*}
     \frac{x - x_0}{n} = \frac{y - y_0}{m} = \frac{z - z_0}{p}
 \end{gather*}
@@ -592,9 +841,9 @@
 \end{gather*}
 
 \subsection*{Уравнение прямой через две заданные точки}
-Пусть даны две точки \(M_1(x_1, y_1, z_1)\) и \(M_2(x_2, y_2, z_2)\), которые лежат на некоторой прямой \(l\). Тогда вектор  \(\overrightarrow{M_1M_2} = (x_2 - x_1, y_2 - y_1, z_2 - z_1)\) явлется направляющим вектором этой прямой.
+Пусть даны две точки \(M_1(x_1, y_1, z_1)\) и \(M_2(x_2, y_2, z_2)\), которые лежат на некоторой прямой \(l\). Тогда вектор  \(\vv{M_1M_2} = (x_2 - x_1, y_2 - y_1, z_2 - z_1)\) явлется направляющим вектором этой прямой.
 
-Пусть у нас есть произвольная точка \(M(x, y, z)\), лежащая на прямой \(l\). Тогда вектор \(\overrightarrow{M_1M} = (x - x_1, y - y_1, z - z_1)\) будет коллинеарен вектору \(\overrightarrow{M_1M_2}\). Из условия коллинеарности следует, что:
+Пусть у нас есть произвольная точка \(M(x, y, z)\), лежащая на прямой \(l\). Тогда вектор \(\vv{M_1M} = (x - x_1, y - y_1, z - z_1)\) будет коллинеарен вектору \(\vv{M_1M_2}\). Из условия коллинеарности следует, что:
 \begin{gather*}
     \frac{x - x_1}{x_2 - x_1} = \frac{y - y_1}{y_2 - y_1} = \frac{z - z_1}{z_2 - z_1}
 \end{gather*}
@@ -605,30 +854,30 @@
 
 \subsection*{Каноническое уравнение прямой}
 
-Дана прямая \(L\), проходящая через точку \(M_0(x_0;y_0)\), и направляющий вектор \(\overrightarrow{a}(m, n)\) этой прямой.
-Пусть \(M(x, y)\) — произвольная точка на искомой прямой \(L\), тогда \(M \in L \iff \overrightarrow{M_0M} || \overrightarrow{a}\).
+Дана прямая \(L\), проходящая через точку \(M_0(x_0;y_0)\), и направляющий вектор \(\vv{a}(m, n)\) этой прямой.
+Пусть \(M(x, y)\) — произвольная точка на искомой прямой \(L\), тогда \(M \in L \iff \vv{M_0M} || \vv{a}\).
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{kanon_line.png}
 \end{center}
 
-Условием коллинеарности векторов \(\overrightarrow{M_0M}\) и \(\overrightarrow{a}\) будет:
+Условием коллинеарности векторов \(\vv{M_0M}\) и \(\vv{a}\) будет:
 \(\dfrac{x - x_0}{m} = \dfrac{y - y_0}{n}\), что и является каноническим уравнением прямой.
 
 \subsection*{Уравнение прямой через 2 заданные точки}
 
 Даны две точки \(M_0(x_0;y_0)\) и \(M_1(x_1;y_1)\), лежащие на прямой \(L\).
-Из этого следует, что \(\overrightarrow{M_0M_1} = (x_1 - x_0; y_1 - y_0)\) — направляющий вектор прямой \(L\).
+Из этого следует, что \(\vv{M_0M_1} = (x_1 - x_0; y_1 - y_0)\) — направляющий вектор прямой \(L\).
 
 Тогда искомое уравнение будет иметь вид: \(\dfrac{x - x_0}{x_1 - x_0} = \dfrac{y - y_0}{y_1 - y_0}\).
 
 \subsection*{Параметрическое уравнение прямой}
 
-Уравнение \(\overrightarrow{M_0M} = \lambda \cdot \overrightarrow{a}\) называют векторно-параметрическим уравнением прямой, где \lambda — некоторое действительное число.
+Уравнение \(\vv{M_0M} = \lambda \cdot \vv{a}\) называют векторно-параметрическим уравнением прямой, где \lambda — некоторое действительное число.
 
 В векторной форме оно имеет вид:
 \begin{gather*}
-    \overrightarrow{M_0M} = \lambda \cdot \overrightarrow{a} \iff
+    \vv{M_0M} = \lambda \cdot \vv{a} \iff
     \begin{cases}
         x - x_0 = \lambda \cdot m \\
         y - y_0 = \lambda \cdot n
@@ -644,42 +893,47 @@
 
 Уравнение, имеющее вид \(Ax + By + C = 0\) — это общее уравнение прямой на плоскости в прямоугольной системе координат \(Oxy\).
 
-\subsubsection*{Теорема}
-Любое уравнение первой степени, имеющее вид \(Ax + By + C = 0\), где \(A, B, C\) – некоторые действительные числа (\(A\) и \(B\) не равны одновременно нулю) определяет прямую линию в прямоугольной системе координат на плоскости.
-В свою очередь, любая прямая в прямоугольной системе координат на плоскости определяется уравнением, имеющим вид \(Ax + By + C = 0\) при некотором наборе значений \(A, B, C\).
-\subsubsection*{Доказательство}
-Теорема состоит из 2-х пунктов.
-Докажем каждый из них: \\
+\begin{theorem}
+    \newpar
+    Любое уравнение первой степени, имеющее вид \(Ax + By + C = 0\), где \(A, B, C\) – некоторые действительные числа (\(A\) и \(B\) не равны одновременно нулю) определяет прямую линию в прямоугольной системе координат на плоскости.
+    В свою очередь, любая прямая в прямоугольной системе координат на плоскости определяется уравнением, имеющим вид \(Ax + By + C = 0\) при некотором наборе значений \(A, B, C\).
+\end{theorem}
 
-\textbf{Пункт 1}. Уравнение \(Ax + By + C = 0\) определяет на плоскости прямую. \\
+\begin{proof}
 
-Пусть существует некоторая точка \(M_0(x_0, y_0)\), координаты которой отвечают уравнению \(Ax + By + C = 0\), таким образом: \(Ax_0 + By_0 + C = 0\).
-Вычтем из левой и правой частей уравнений \(Ax + By + C = 0\) левую и правую части уравнения \(Ax_0 + By_0 + C = 0\), получим новое уравнение, имеющее вид \(A(x - x_0) + B(y - y_0) + C = 0\).
-Оно эквивалентно \(Ax + By + C = 0\).
+    Теорема состоит из 2-х пунктов.
+    Докажем каждый из них: \\
 
-Полученное уравнение \(A(x - x_0) + B(y - y_0) + C = 0\) является необходимым и достаточным условием перпендикулярности векторов \(\overrightarrow{n} = (A, B)\) и \(\overrightarrow{M_0M} = (x - x_0, y - y_0)\).
-Таким образом множество точек \(M(x, y)\) задает в прямоугольной системе координат прямую линию, перпендикулярную направлению вектора \(\overrightarrow{n} = (A, B)\).
+    \textbf{Пункт 1}. Уравнение \(Ax + By + C = 0\) определяет на плоскости прямую. \\
 
-Предположим, что это не так. Тогда вектор \(\overrightarrow{n} = (A, B)\) не перпендикулярен вектору \(\overrightarrow{M_0M} = (x - x_0, y - y_0)\), а равенство \(A(x - x_0) + B(y - y_0) = 0\) не является верным.
+    Пусть существует некоторая точка \(M_0(x_0, y_0)\), координаты которой отвечают уравнению \(Ax + By + C = 0\), таким образом: \(Ax_0 + By_0 + C = 0\).
+    Вычтем из левой и правой частей уравнений \(Ax + By + C = 0\) левую и правую части уравнения \(Ax_0 + By_0 + C = 0\), получим новое уравнение, имеющее вид \(A(x - x_0) + B(y - y_0) + C = 0\).
+    Оно эквивалентно \(Ax + By + C = 0\).
 
-\begin{center}
-    \includegraphics[width=0.5\textwidth]{general_line.png}
-\end{center}
+    Полученное уравнение \(A(x - x_0) + B(y - y_0) + C = 0\) является необходимым и достаточным условием перпендикулярности векторов \(\vv{n} = (A, B)\) и \(\vv{M_0M} = (x - x_0, y - y_0)\).
+    Таким образом множество точек \(M(x, y)\) задает в прямоугольной системе координат прямую линию, перпендикулярную направлению вектора \(\vv{n} = (A, B)\).
 
-Следовательно, уравнение \(A(x - x_0) + B(y - y_0) = 0\) определяет некоторую прямую в прямоугольной системе координат на плоскости, а значит и эквивалентное ему уравнение \(Ax + By + C = 0\) определяет ту же прямую. \\
+    Предположим, что это не так. Тогда вектор \(\vv{n} = (A, B)\) не перпендикулярен вектору \(\vv{M_0M} = (x - x_0, y - y_0)\), а равенство \(A(x - x_0) + B(y - y_0) = 0\) не является верным.
 
-\textbf{Пункт 2}. Любую прямую в прямоугольной системе координат на плоскости можно задать уравнением первой степени \(Ax + By + C = 0\). \\
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{general_line.png}
+    \end{center}
 
-Зададим в прямоугольной системе координат на плоскости прямую \(a \); точку \(M_0(x_0, y_0)\), через которую проходит эта прямая, а также нормальный вектор этой прямой \(\overrightarrow{n} = (A, B)\).
-Пусть точка \(M(x, y)\) — произвольная точка на прямой, тогда векторы \(\overrightarrow{n} = (A, B)\) и \(\overrightarrow{M_0M} = (x - x_0, y - y_0)\) являются перпендикулярными друг другу и их скалярное произведение равно нулю:
-\begin{gather*}
-    (\overrightarrow{n}, \overrightarrow{M_0M}) = A(x - x_0) + B(y - y_0) = 0
-\end{gather*}
+    Следовательно, уравнение \(A(x - x_0) + B(y - y_0) = 0\) определяет некоторую прямую в прямоугольной системе координат на плоскости, а значит и эквивалентное ему уравнение \(Ax + By + C = 0\) определяет ту же прямую. \\
 
-Пусть \(C = -Ax_0 - By_0\), тогда получим уравнение:
-\begin{gather*}
-    Ax + By + C = 0
-\end{gather*}
+    \textbf{Пункт 2}. Любую прямую в прямоугольной системе координат на плоскости можно задать уравнением первой степени \(Ax + By + C = 0\). \\
+
+    Зададим в прямоугольной системе координат на плоскости прямую \(a \); точку \(M_0(x_0, y_0)\), через которую проходит эта прямая, а также нормальный вектор этой прямой \(\vv{n} = (A, B)\).
+    Пусть точка \(M(x, y)\) — произвольная точка на прямой, тогда векторы \(\vv{n} = (A, B)\) и \(\vv{M_0M} = (x - x_0, y - y_0)\) являются перпендикулярными друг другу и их скалярное произведение равно нулю:
+    \begin{gather*}
+        (\vv{n}, \vv{M_0M}) = A(x - x_0) + B(y - y_0) = 0
+    \end{gather*}
+
+    Пусть \(C = -Ax_0 - By_0\), тогда получим уравнение:
+    \begin{gather*}
+        Ax + By + C = 0
+    \end{gather*}
+\end{proof}
 
 \subsection*{Уравнение прямой в отрезках на осях}
 
@@ -731,18 +985,18 @@
     l: \frac{x - x_0}{m} = \frac{y - y_0}{n} = \frac{z - z_0}{p}
 \end{gather*}
 
-Ее направляющим вектором является вектор \(\overrightarrow{s} = (m, n, p)\).
+Ее направляющим вектором является вектор \(\vv{s} = (m, n, p)\).
 
 И плоскость:
 \begin{gather*}
     \alpha: Ax + By + Cz + D = 0
 \end{gather*}
 
-Ее нормальным вектором является вектор \(\overrightarrow{n} = (A, B, C)\)
+Ее нормальным вектором является вектор \(\vv{n} = (A, B, C)\)
 
 Тогда прямая \textbf{параллельна} плоскости, когда:
 \begin{gather*}
-    \overrightarrow{n} \perp \overrightarrow{s} \iff \overrightarrow{n} \cdot \overrightarrow{s} = 0 \iff Am + Bm + Cp = 0
+    \vv{n} \perp \vv{s} \iff \vv{n} \cdot \vv{s} = 0 \iff Am + Bm + Cp = 0
 \end{gather*}
 
 И прямая \textbf{перпендикулярна} плоскости, если:
@@ -1155,49 +1409,50 @@
     \lim_{x \to \infty}{\Big(1 + \frac{1}{x}\Big)^x} = e \text{ или } \lim_{x \to 0}{(1 + x)^\frac{1}{x}} = e
 \end{gather*}
 
-\subsubsection*{Доказательство}
-Сначала докажем теорему для натуральных значений \(x\):
-\begin{gather*}
-    x_n = \Big(1 + \frac{1}{n}\Big)^n; n \in \mathbb{N}
-\end{gather*}
+\begin{proof}
+    Сначала докажем теорему для натуральных значений \(x\):
+    \begin{gather*}
+        x_n = \Big(1 + \frac{1}{n}\Big)^n; n \in \mathbb{N}
+    \end{gather*}
 
-По формуле бинома Ньютона:
-\begin{align*}
-    (a + b)^n & = a^n + \frac{n}{1} \cdot a^{n - 1} + \frac{n(n - 1)}{1 \cdot 2} \cdot a^{n - 2} \cdot b^2 + ... + \\
-              & + \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot b^n
-\end{align*}
+    По формуле бинома Ньютона:
+    \begin{align*}
+        (a + b)^n & = a^n + \frac{n}{1} \cdot a^{n - 1} + \frac{n(n - 1)}{1 \cdot 2} \cdot a^{n - 2} \cdot b^2 + ... + \\
+                  & + \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot b^n
+    \end{align*}
 
-Полагая \(a = 1, b = \dfrac{1}{n}\), получим:
-\begin{align*}
-    \Big(1 + \frac{1}{n}\Big)^n & = 1 + \frac{n}{1} \cdot \frac{1}{n} + \frac{n(n - 1)}{1 \cdot 2} \cdot \frac{1}{n^2} +
-    \frac{n(n - 1)(n - 2)}{1 \cdot 2 \cdot 3} \cdot \frac{1}{n^3} + ... +                                                                                                                             \\
-                                & +                            \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot \frac{1}{n^n}                                        \\
-    \Big(1 + \frac{1}{n}\Big)^n & = 1 + 1 + \frac{1}{1 \cdot 2} \cdot \Big(1 - \frac{1}{n}\Big) + \frac{1}{1 \cdot 2 \cdot 3} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) + ... + \\
-                                & + \frac{1}{1 \cdot 2 \cdot 3 ... \cdot n} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) \cdot ... \cdot \Big(1 - \frac{n - 1}{n}\Big)
-\end{align*}
+    Полагая \(a = 1, b = \dfrac{1}{n}\), получим:
+    \begin{align*}
+        \Big(1 + \frac{1}{n}\Big)^n & = 1 + \frac{n}{1} \cdot \frac{1}{n} + \frac{n(n - 1)}{1 \cdot 2} \cdot \frac{1}{n^2} +
+        \frac{n(n - 1)(n - 2)}{1 \cdot 2 \cdot 3} \cdot \frac{1}{n^3} + ... +                                                                                                                             \\
+                                    & +                            \frac{n(n - 1)(n - 2)...(n - (n - 1))}{1 \cdot 2 \cdot 3 \cdot ... \cdot n} \cdot \frac{1}{n^n}                                        \\
+        \Big(1 + \frac{1}{n}\Big)^n & = 1 + 1 + \frac{1}{1 \cdot 2} \cdot \Big(1 - \frac{1}{n}\Big) + \frac{1}{1 \cdot 2 \cdot 3} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) + ... + \\
+                                    & + \frac{1}{1 \cdot 2 \cdot 3 ... \cdot n} \cdot \Big(1 - \frac{1}{n}\Big) \cdot \Big(1 - \frac{2}{n}\Big) \cdot ... \cdot \Big(1 - \frac{n - 1}{n}\Big)
+    \end{align*}
 
-С увеличением \(n\) число полож. слагаемых в правой части увеличивается. Кроме того, при увеличении \(n\) число  \(\frac{1}{n}\) убывает. Следовательно величины \(\Big(1 - \dfrac{1}{n}\Big), \Big(1 - \dfrac{2}{n}\Big), ...\) возрастают, а значит и последовательность является возрастающей.
+    С увеличением \(n\) число полож. слагаемых в правой части увеличивается. Кроме того, при увеличении \(n\) число  \(\frac{1}{n}\) убывает. Следовательно величины \(\Big(1 - \dfrac{1}{n}\Big), \Big(1 - \dfrac{2}{n}\Big), ...\) возрастают, а значит и последовательность является возрастающей.
 
-Заметим, что \(\Big(1 + \frac{1}{n}\Big)^n \geq 2, n \in \mathbb{N}\).
+    Заметим, что \(\Big(1 + \frac{1}{n}\Big)^n \geq 2, n \in \mathbb{N}\).
 
-Покажем, что последовательность ограничена, заменив каждую скобку в правой части на единицу:
-\begin{gather*}
-    \Big(1 + \frac{1}{n}\Big)^n < 1 + 1 + \frac{1}{1 \cdot 2} + \frac{1}{1 \cdot 2 \cdot 3} + ... + \frac{1}{1 \cdot 2 \cdot 3 \cdot ... \cdot n}
-\end{gather*}
-Усилим полученное неравенство, заменив \(3, 4, 5, ...\), стоящие в знаменателях дробей числом  \(2\) :
-\begin{gather*}
-    \Big(1 + \frac{1}{n}\Big)^n < 1 + \Big(1 + \frac{1}{2} + \frac{1}{2^2} + ... + \frac{1}{2^{n - 1}}\Big)
-\end{gather*}
+    Покажем, что последовательность ограничена, заменив каждую скобку в правой части на единицу:
+    \begin{gather*}
+        \Big(1 + \frac{1}{n}\Big)^n < 1 + 1 + \frac{1}{1 \cdot 2} + \frac{1}{1 \cdot 2 \cdot 3} + ... + \frac{1}{1 \cdot 2 \cdot 3 \cdot ... \cdot n}
+    \end{gather*}
+    Усилим полученное неравенство, заменив \(3, 4, 5, ...\), стоящие в знаменателях дробей числом  \(2\) :
+    \begin{gather*}
+        \Big(1 + \frac{1}{n}\Big)^n < 1 + \Big(1 + \frac{1}{2} + \frac{1}{2^2} + ... + \frac{1}{2^{n - 1}}\Big)
+    \end{gather*}
 
-Заметим, что в скобках получилась геометрическая прогрессия, сумма которой равна \(2 \cdot \Big(1 - \dfrac{1}{2^n}\Big) < 2>\). А значит:
-\begin{gather*}
-    2 \leq \Big(1 + \frac{1}{n}\Big)^n < 3
-\end{gather*}
+    Заметим, что в скобках получилась геометрическая прогрессия, сумма которой равна \(2 \cdot \Big(1 - \dfrac{1}{2^n}\Big) < 2>\). А значит:
+    \begin{gather*}
+        2 \leq \Big(1 + \frac{1}{n}\Big)^n < 3
+    \end{gather*}
 
-На основании теоремы Вейерштрасса наша последовательность монотонно возрастает и ограничена, как следствие, имеет предел, равный \(e\):
-\begin{gather*}
-    \lim_{n \to \infty}{\Big(1 + \frac{1}{n}\Big)^n} = e
-\end{gather*}
+    На основании теоремы Вейерштрасса наша последовательность монотонно возрастает и ограничена, как следствие, имеет предел, равный \(e\):
+    \begin{gather*}
+        \lim_{n \to \infty}{\Big(1 + \frac{1}{n}\Big)^n} = e
+    \end{gather*}
+\end{proof}
 
 \subsubsection*{Следствия}
 \begin{enumerate}
