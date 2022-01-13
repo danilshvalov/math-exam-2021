@@ -1,7 +1,7 @@
-% \documentclass[12pt, fleqn]{extarticle}
 \documentclass[a4paper,12pt,oneside]{extbook}
 \usepackage[english,russian]{babel}
 \usepackage{fontspec}
+\usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{indentfirst}
 \usepackage{caption}
@@ -19,6 +19,7 @@
 \usepackage[b]{esvect}
 \usepackage{mdframed}
 \usepackage{textcomp}
+\usepackage{multicol}
 \usepackage[%
     left=0.8in,%
     right=0.8in,%
@@ -45,7 +46,7 @@
 
 \newtheoremstyle{numbered}{}{}{}{}{}{}{.5em}{\textbf{#1\;#2.}\;#3}
 
-\newtheoremstyle{unnumbered}{}{}{}{}{}{}{.5em}{\textbf{#1\;#3.}\par}
+\newtheoremstyle{unnumbered}{}{}{}{}{}{}{.5em}{\textbf{#1\if\relax\detokenize{#3}\relax\else\;#3\newpar\fi.}\par}
 
 \newenvironment{definition}[1][]{\noindent\textbf{Определение.}\if\relax\detokenize{#1}\relax\else\;#1.\newpar\fi\;}{\bigskip}
 
@@ -103,6 +104,8 @@
 
 \renewcommand{\cftsecfont}{\mdseries}
 \renewcommand{\cftsecpagefont}{\mdseries}
+
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern0mu#1\mkern-1.5mu}\mkern 1.5mu}
 
 \hypersetup{
     colorlinks=true,
@@ -1126,19 +1129,6 @@
     \item[—]{\textbf{Параллельны}, если \(\dfrac{m_1}{m_2} = \dfrac{n_1}{n_2}\)}
 \end{itemize}
 
-% Рассмотрим прямую с, которая пересекает две прямые а и b и образует с ними восемь углов.
-% Такую прямую с называют — секущая.
-% Пары углов, которые образует секущая, также имеют названия.
-% Итак, на данном рисунке изображены эти все прямые и восемь углов.
-
-% % TODO добавить картинку накр. лежащих и тд
-
-% \begin{enumerate}
-%     \item {Если накрест лежащие углы равны (4 и 5, 3 и 6)}
-%     \item {Если соответственные углы равны (4 и 6, 3 и 5)}
-%     \item {Сумма внутренних односторонних углоав равна 180\textdegree}
-% \end{enumerate}
-
 \chapter{Кривые второго порядка}%
 \label{cha:Кривые второго порядка}
 
@@ -1587,6 +1577,335 @@
     \item[—]{Все параболы подобны. Расстояние между фокусом и директрисой определяет масштаб;}
 \end{itemize}
 
+\chapter{Множества и последовательности}%
+\label{cha:Множества и последовательности}
+
+\section{Последовательность}%
+\label{sec:Последовательность}
+
+\subsection{Определение}%
+\label{sub:Определение}
+
+\begin{siderules}
+    Числовая последовательность \(\{x_n\}\) — это правило, согласно которому каждому натуральному числу \(n = 1, 2, 3, ...\) ставится в соответствие число \(x_n\). Число \(x_n\) называют \(n\)-ным членом или элементом последовательности.
+\end{siderules}
+
+Другими словами числовая последовательность – это функция, областью определения которой является множество натуральных чисел. Число элементов последовательности бесконечно. Среди элементов могут встречаться и члены, имеющие одинаковые значения. Также последовательность можно рассматривать как нумерованное множество чисел, состоящее из бесконечного числа членов.
+
+\subsection{Ограниченная последовательность}%
+\label{sub:Ограниченная последовательность}
+
+\begin{siderules}
+    Последовательность \(\{x_n\}\) называется \textbf{ограниченной}, если
+    \[
+        \exists M: \forall n \in \mathbb{N} \; |x_n| < M
+    \]
+\end{siderules}
+
+\begin{siderules}
+    \textbf{Верхней гранью \(\sup x_n\) последовательности \(\{x_n\}\)} называют наименьшее из чисел, ограничивающее последовательность сверху. То есть:
+    \[
+        \begin{cases}
+            \exists M: \forall n \in \mathbb{N} \; x_n \leq M \\
+            \forall M_1 < M \; \exists x_k: x_k > M_1
+        \end{cases}
+    \]
+\end{siderules}
+
+\begin{siderules}
+    \textbf{Нижней гранью \(\inf x_n\) последовательности \(\{x_n\}\)} называют наибольшее из чисел, ограничивающее последовательность снизу. То есть:
+    \[
+        \begin{cases}
+            \exists m: \forall n \in \mathbb{N} \; x_n \geq m \\
+            \forall m_1 > m \; \exists x_k: x_k < m_1
+        \end{cases}
+    \]
+\end{siderules}
+
+\section{Предел последовательности}%
+\label{sec:Предел последовательности}
+
+\subsection{Определения}%
+\label{sub:Определения}
+
+\begin{siderules}
+    Значение \(A\) называется пределом последовательности \(\{x_n\}\), если для любого сколь угодно малого числа \(\varepsilon\) найдется номер, начиная с которого все элементы последовательности будут отличаться от предела меньше чем на \(\varepsilon\).
+    \[
+        \lim_{n \to \infty}{x_n} = A \iff
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N \implies |x_n - A| < \varepsilon
+    \]
+    \(\varepsilon\)-окрестностью точки \(A\) называется открытый интервал \((A - \varepsilon, A + \varepsilon)\).
+\end{siderules}
+
+\begin{siderules}
+    \textbf{Сходящаяся последовательность} — это последовательность, у которой существует предел. Если последовательность \(\{x_n\}\) имеет предел \(\displaystyle \lim_{n \to \infty}{x_n} = A\), то говорят, что последовательность \(\{x_n\}\) сходится к \(A\).
+\end{siderules}
+
+\begin{siderules}
+    \textbf{Расходящаяся последовательность} — это последовательность, не имеющая предела.
+\end{siderules}
+
+\subsection{Свойства конечных пределов последовательности}%
+\label{sub:Свойства конечных пределов последовательности}
+
+\begin{property}
+    Точка \(A\) является пределом последовательности \(\{x_n\}\) тогда и только тогда, когда за пределами любой окрестности этой точки находится находится конечное число элементов последовательности или пустое множество.
+\end{property}
+
+\begin{proof}
+    Пусть точка \(A\) является пределом последовательности \(\{x-n\}\). Из определения следует, что:
+    \[
+        \lim_{n \to \infty}{x_n} = A \iff
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N \implies |x_n - A| < \varepsilon
+    \]
+
+    Тогда за пределами окрестности может находиться не более \(N\) элементов последовательности — конечное число или пустое множество.
+
+    Докажем обратное. Пусть за пределами любой окрестности точки \(A\) находится конечное число элементов последовательности или пустое множество, а \(N - 1\) есть наибольший номер элемента, находящегося за пределами окрестности. Тогда все элементы последовательности с номерами \(n \geq N\) принадлежат этой окрестности. Следовательно точка \(A\) является пределом последовательности.
+\end{proof}
+
+\begin{property}
+    Если число \(A\) не является пределом последовательности \(\{x_n\}\), то существует такая окрестность точки \(A\), за пределами которой находится бесконечное число элементов последовательности.
+\end{property}
+
+\begin{proof}
+    Докажем от противного. Пусть \(A\) не является пределом последовательности \(\{x_n\}\) и за пределами любой окрестности точки \(A\) находится конечное число элементов последовательности. Рассмотрим произвольную окрестность точки \(A\): пусть \(N - 1\) есть наибольший номер элемента, находящегося за ее пределами. Тогда все элементы с номерами \(n \geq N\) принадлежат окрестности. Следовательно \(A\) является пределом последовательности. Получили противоречие, доказывающее свойство.
+\end{proof}
+
+\begin{theorem*}[единственности предела числовой последовательности]
+    \newpar
+    Если последовательность имеет предел, то он единственный
+\end{theorem*}
+
+\begin{proof}
+    Докажем от противного. Пусть у последовательности \(\{x_n\}\) существует два разных предела:
+    \[
+        \begin{cases}
+            \displaystyle
+            \lim_{n \to \infty}{x_n} = A \\
+            \displaystyle
+            \lim_{n \to \infty}{x_n} = B \\
+            A \neq B
+        \end{cases}
+    \]
+
+    Тогда по определению предела:
+    \[
+        \lim_{n \to \infty}{x_n} = A \iff
+        \forall \varepsilon > 0 \; \exists N_{A}(\varepsilon) \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N_{A}(\varepsilon) \implies |x_n - A| < \varepsilon
+    \]
+    \[
+        \lim_{n \to \infty}{x_n} = B \iff
+        \forall \varepsilon > 0 \; \exists N_{B}(\varepsilon) \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N_{B}(\varepsilon) \implies |x_n - B| < \varepsilon
+    \]
+
+    Следовательно элементы последовательности будут находиться в интервалах:
+    \[
+        \begin{cases}
+            A - \varepsilon < x_n < A + \varepsilon \\
+            B - \varepsilon < x_n < B + \varepsilon
+        \end{cases}
+    \]
+
+    Пусть \(N = \max(N_{A}(\varepsilon), N_{B}(\varepsilon))\) и \(\varepsilon = \dfrac{|A - B|}{2}\). Тогда нетрудно убедиться, что эти два интервала не имеют общих точек. Однако, по определению предела все элементы последовательности при \(n > N\) должны находиться как в первом, так и во втором промежутке. Возникает противоречие, доказывающее теорему.
+\end{proof}
+
+\begin{theorem*}[об ограниченности последовательности, имеющей конечный предел]
+    Если последовательность имеет конечный предел, то она ограничена.
+\end{theorem*}
+
+\begin{proof}
+    Пусть последовательность \(\{x_n\}\) имеет конечный предел \(A\), тогда:
+    \[
+        \lim_{n \to \infty}{x_n} = A \iff
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N_{\varepsilon} \implies |x_n - A| < \varepsilon
+    \]
+
+    Из этого следует, что
+    \[
+        \forall n \geq N_{\varepsilon} \; A - \varepsilon < x_n < A + \varepsilon
+    \]
+
+    Кроме того, элементов с номером \(n < N_{\varepsilon}\) конечное число, поскольку \(N_{\varepsilon}\) — конечное число. Следовательно их значения ограничены некоторыми \(m_N\) и \(M_N\), то есть:
+    \[
+        \forall n < N_{\varepsilon} \; m_N \leq x_n \leq M_N
+    \]
+
+    В качестве \(m_N\) и \(M_N\) можно взять значения наименьшего и наибольшего элемента \(x_n\) соответственно при \(n < N_{\varepsilon}\).
+
+    Итого, мы получили, что наша последовательность ограничена:
+    \begin{gather*}
+        \begin{cases}
+            \forall n \geq N_{\varepsilon} \; A - \varepsilon < x_n < A + \varepsilon \\
+            \forall n < N_{\varepsilon} \; m_N \leq x_n \leq M_N
+        \end{cases}
+        \implies
+        m \leq x_n \leq M
+    \end{gather*}
+
+    где \(m = \min(A - \varepsilon, m_N), M = \max(A + \varepsilon, M_N)\)
+\end{proof}
+
+\begin{theorem*}[о пределе постоянной последовательности]
+    \newpar
+    Если каждый элемент последовательности \(\{x_n\}\) равен одному и тому же числу \(C: x_n = C\), то эта последовательность имеет предел, и этот предел равен числу \(C\).
+\end{theorem*}
+
+\begin{proof}
+    Вспомним определение предела:
+    \[
+        \lim_{n \to \infty}{x_n} = C \iff
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} \in \mathbb{N}: \forall n \in \mathbb{N}: n \geq N_{\varepsilon} \implies |x_n - C| < \varepsilon
+    \]
+
+    В случае последовательности с равными элементами какую бы \(\varepsilon\)-окрестность точки \(C\) мы не взяли, все элементы последовательности будут находиться в этой окрестности:
+    \[
+        \begin{cases}
+            |x_n - C| < \varepsilon \\
+            \forall n \; x_n = C
+        \end{cases}
+        \implies
+        |C - C| < \varepsilon
+        \implies
+        0 < \varepsilon
+    \]
+
+    что выполняется для всех \(n\), поскольку \(\varepsilon > 0\). Тогда:
+    \[
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} = 1: \forall n \in \mathbb{N}: n \geq N \implies |x_n - C| < \varepsilon
+    \]
+
+    Значит число \(C\) является пределом последовательности \(\{x_n\}\).
+\end{proof}
+
+\section{Вложенные отрезки}%
+\label{sec:Вложенные отрезки}
+
+\begin{definition}
+    Пусть \(a, b \in \mathbb{R}, a < b\). Множество чисел, удовлетворяющих неравенствам \(a \leq x \leq b\) называется отрезком с концами \(a\) и \(b\). Отрезок обозначается так: \([a, b]\).
+\end{definition}
+
+Последовательность числовых отрезков
+\[
+    [a_1, b_1], [a_2, b_2], \ldots, [a_n, b_n], \ldots; \; a_n \in \mathbb{R}, b_n \in \mathbb{R}, n = 1, 2, 3, \ldots
+\]
+
+называется последовательностью \textbf{вложенных отрезков}, если каждый последующий содержится в предыдущем:
+\[
+    [a_1, b_1] \supset [a_2, b_2] \supset \ldots \supset [a_n, b_n] \supset \ldots
+\]
+
+То есть концы отрезков связаны неравенствами:
+\[
+    a_1 \leq a_2 \leq \ldots \leq a_n \leq \ldots \leq b_n \leq \ldots \leq b_2 \leq b_1
+\]
+
+\section{Теорема Коши-Кантора о стягивающихся отрезках}%
+\label{sec:Теорема Коши-Кантора о стягивающихся отрезках}
+
+\begin{theorem*}
+    Для любой последовательности вложенный отрезков \(\exists c \in \mathbb{R}\), принадлежащая всем этим отрезкам. Если длины отрезков стремятся к нулю, т. е. \(\displaystyle \lim_{n \to \infty}{(b_n - a_n)} = 0\), то такая точка единственная.
+\end{theorem*}
+
+\begin{proof}
+    Для доказательства \textbf{первой части теоремы} воспользуемся аксиомой полноты действительных чисел.
+
+    \textbf{Аксиома полноты действительных чисел}.
+
+    Пусть множества \(A\) и \(B\) есть два подмножества \(\mathbb{R}\) таких, что:
+    \[
+        \forall a, b: a \in A, b \in B \rightarrow a \leq b
+    \]
+
+    Тогда
+    \[
+        \exists c \in \mathbb{R}: \forall a, b: a \in A, b \in B \rightarrow a \leq c \leq b
+    \]
+
+    Применим эту аксиому: пусть множество \(A\) есть множество левых концов отрезков, множество \(B\) — правых. Тогда между двумя любыми элементами этих множеств выполняется неравенство \(a_n \leq b_n\). Тогда из аксиомы полноты действительных чисел следует, что \(\exists c: \forall n \; a_n \leq c \leq b_n\). Следовательно точка \(c\) принадлежит всем отрезкам.
+
+    Докажем \textbf{вторую часть теоремы}. Пусть \(\displaystyle \lim_{n \to \infty}{(b_n - a_n)} = 0\). В соответствии с определением предела последовательности:
+    \[
+        \forall \varepsilon > 0 \; \exists N_{\varepsilon} \in \mathbb{N}: \forall n > N_{\varepsilon} \rightarrow |b_n - a_n| < \varepsilon
+    \]
+
+    Предположим противное. Пусть \(\exists c_1, c_2, c_1 \neq c_2\), принадлежащие всем отрезкам. Это означает, что \(\forall n\) выполняется:
+    \[
+        \begin{cases}
+            a_n \leq c_1 \leq b_n \\
+            a_n \leq c_2 \leq b_n
+        \end{cases}
+    \]
+
+    Тогда:
+    \[
+        |c_1 - c_2| \leq b_n - a_n \implies |c_1 - c_2| \leq \varepsilon
+    \]
+
+    Заметим, что \(\forall \varepsilon > 0 \; |c_1 - c_2| \leq \varepsilon\) выполняется только при условии, что \(c_1 = c_2\).
+\end{proof}
+
+\section{Теорема Больцано-Вейерштрасса}%
+\label{sec:Теорема Больцано-Вейерштрасса}
+
+\begin{theorem*}
+    Из всякой ограниченной последовательности можно извлечь сходящуюся подпоследовательность.
+\end{theorem*}
+
+\begin{proof}
+    Пусть \(\{x_n\}\) — ограниченная последовательность, все значения которой находятся в \([a_1, b_1]\). Тогда пусть \(x_{n_1} \in [a_1, b_1]\).
+
+    Теперь рассмотрим \([a_1, b_1]\) и разобьем его пополам:
+    % TODO добавить картинку
+    \begin{center}
+        Здесь скоро будет картинка
+    \end{center}
+
+    Поскольку все члены последовательности лежат в \([a_1, b_1]\), то либо в правой половине, либо в левой половине их бесконечно много. Если бы в каждой из них их было конечное число, то и внутри всего отрезка их было бы конечное число. В качестве \([a_2, b_2]\) выберем ту половину, которая содержит бесконечное количество членов последовательности. Тогда \(\exists n_2: n_1 < n_2, \; x_{n_2} \in [a_2, b_2]\).
+
+    % TODO добавить картинку
+    \begin{center}
+        Здесь скоро будет картинка
+    \end{center}
+
+    Снова делим отрезок пополам, снова в одной из половин бесконечное количество членов последовательности. Назовем эту половинку \([a_3, b_3]\). Тогда снова получим, что \(\exists n_3: n_2 < n_3, \; x_{n_3} \in [a_3, b_3]\).
+
+    % TODO добавить картинку
+    \begin{center}
+        Здесь скоро будет картинка
+    \end{center}
+
+    Продолжая повторять этот алгоритм, мы получим последовательность стягивающихся отрезков:
+    \[
+        [a_1, b_1] \supset [a_2, b_2] \supset [a_3, b_3] \supset \ldots
+    \]
+
+    Тогда длина отрезка \([a_k, b_k]\) равна:
+    \[
+        b_k - a_k = \frac{b_1 - a_1}{2^k} \overset{k \rightarrow \infty}{\longrightarrow} 0
+    \]
+
+    Кроме того, мы получили строго возрастающую последовательность индексов:
+    \[
+        n_1 < n_2 < n_3 < \ldots : x_{n_k} \in [a_k, b_k]
+    \]
+
+    Тогда по \plink{sec:Теорема Коши-Кантора о стягивающихся отрезках}{теореме о стягивающихся отрезках} \(\exists c: c \in \overset{\infty}{\underset{k = 1}{\bigcap}} [a_k, b_k]\) и \(\displaystyle c = \lim_{k \rightarrow \infty}{a_k} = \lim_{k \rightarrow \infty}{b_k}\).
+
+    Так как \(x_{n_k} \in [a_k, b_k]\), то \(a_k \leq x_{n_k} \leq b_k\). Тогда по \plink{sub:Теорема о двух милиционерах}{теореме о двух милиционерах}:
+    \[
+        \begin{cases}
+            a_k \rightarrow c \\
+            b_k \rightarrow c \\
+            a_k \leq x_{n_k} \leq b_k
+        \end{cases}
+        \implies
+        x_{n_k} \rightarrow c
+    \]
+
+    Тогда \(\{x_n\}\) и будет той самой подпоследовательностью, имеющей предел.
+\end{proof}
+
 \chapter{Пределы}%
 \label{cha:Пределы}
 
@@ -1595,18 +1914,32 @@
 
 \subsection{Вещественная ось}%
 \label{sub:Вещественная ось}
-% TODO написать что-нибудь
-А что писать сюда???
+
+\begin{siderules}
+    \textbf{Вещественные} или \textbf{действительные} числа — это вместе взятые множества рациональных и иррациональных чисел. Множество вещественных чисел обозначается \(\mathbb{R}\) и часто называется \textbf{вещественной} или \textbf{числовой} прямой.
+\end{siderules}
+
+% TODO добавить аксиомы?
 
 \subsection{Бесконечность}%
 \label{sub:Бесконечность}
-% TODO написать что-нибудь
-И сюда что писать?
+
+\begin{siderules}
+    \textbf{Расширенная числовая прямая} \(\overbar{\mathbb{R}}\) — множество вещественных чисел, дополненное двумя элементами: \(+\infty\) (положительная бесконечность) и \(-\infty\) (отрицательная бесконечность), то есть:
+    \[
+        \overbar{\mathbb{R}} = \mathbb{R} \cup \{+\infty\} \cup \{-\infty\}
+    \]
+\end{siderules}
+
+Бесконечности \(+\infty\) и \(-\infty\) не являются числами в обычном понимании этого слова. Их также называют \textbf{бесконечными числами}, в отличие от вещественных чисел \(a \in \mathbb{R}\), называемых \textbf{конечными числами}. При этом \(\forall x \in \mathbb{R}\) по определению полагают выполненными неравнества:
+\[
+    -\infty < x, \quad x < +\infty, \quad -\infty < +\infty
+\]
 
 \subsection{Окрестность точки}%
 \label{sub:Окрестность точки}
 
-\textbf{Окресностью действительной точки} \(x_0\) называется любой открытый интервал, содержащий эту точку:
+\textbf{Окрестностью действительной точки} \(x_0\) называется любой открытый интервал, содержащий эту точку:
 \[
     U(x_0) = \{x: -\varepsilon_1 < x - x_0 < \varepsilon_2; \varepsilon_1 > 0, \varepsilon_2 > 0\}
 \]
@@ -1620,6 +1953,7 @@
 \[
     \overset{\circ}{U}(x_0) = U(x_0) \; \backslash \; \{x_0\}
 \]
+
 
 \section{Определения предела функции. Односторонние пределы}%
 \label{sec:Определения предела функции. Односторонние пределы}
@@ -1641,13 +1975,12 @@
 \end{gather*}
 
 
+\subsection{Определение предела по Гейне}%
 \label{sub:Определение предела по Гейне}
-\begin{definition}[Предел по Гейне]
-    Пусть функция \(f(x)\) определена в некоторой проколотой окрестности \(\overset{\circ}{U}(x_0)\) точки \(x_0\). Тогда значение \(A\) называется пределом функции \(f(x)\) при \(x \to x_0\), если для любой последовательности \(\{x_n\} \to x_0: x_n \in \overset{\circ}{U}(x_0)\) последовательность соответствующих значений \(\{f(x_n)\}\) стремится к \(A\):
-    \[
-        \forall \{x_n\}:\; x_n \in \overset{\circ}{U}(x_0),\; x_n \to x_0,\; f(x_n) \to A
-    \]
-\end{definition}
+Пусть функция \(f(x)\) определена в некоторой проколотой окрестности \(\overset{\circ}{U}(x_0)\) точки \(x_0\). Тогда значение \(A\) называется пределом функции \(f(x)\) при \(x \to x_0\), если для любой последовательности \(\{x_n\} \to x_0: x_n \in \overset{\circ}{U}(x_0)\) последовательность соответствующих значений \(\{f(x_n)\}\) стремится к \(A\):
+\[
+    \forall \{x_n\}:\; x_n \in \overset{\circ}{U}(x_0),\; x_n \to x_0,\; f(x_n) \to A
+\]
 
 
 \section{Бесконечно малые и бесконечно большие функции}%
@@ -1680,9 +2013,10 @@
     Пусть \(\overset{\circ}{U}(x_0) = \min(\overset{\circ}{U}_\alpha(x_0), \overset{\circ}{U}_g(x_0))\).
 
     Тогда
-    \(
-    \forall \varepsilon > 0: x \in \overset{\circ}{U}(x_0) \implies |\alpha(x) \cdot g(x)| < \dfrac{\varepsilon}{M} \cdot M = \varepsilon
-    \), т. е. \(|\alpha(x) \cdot g(x)| < \varepsilon\).
+    \[
+        \forall \varepsilon > 0: x \in \overset{\circ}{U}(x_0) \implies |\alpha(x) \cdot g(x)| \leq |\alpha(x)| \cdot |g(x)| < \dfrac{\varepsilon}{M} \cdot M = \varepsilon
+    \]
+
 
     Следовательно:
     \[
@@ -1751,7 +2085,10 @@
 % TODO добавить доказательство
 
 \begin{theorem*}[о частном от деления ограниченной функции на бесконечно большую]
-    % TODO добавить определение
+    Пусть есть функция \(f(x)\) является бесконечно большой при \(x \to x_0\). Также есть функция \(g(x)\), ограниченная на некоторой проколотой окрестности \(\overset{\circ}{U_g}(x_0)\) точки \(x_0\). Тогда
+    \[
+        \lim_{x \to x_0}{\dfrac{g(x)}{f(x)}} = 0
+    \]
 \end{theorem*}
 % TODO добавить доказательство
 
@@ -1792,6 +2129,241 @@
     \lim_{x \to x_0}{\frac{g(x)}{f(x)}} = 0 \\
     \lim_{x \to x_0}{\frac{y(x)}{\alpha(x)}} = \infty
 \end{gather*}
+
+\section{Основные теоремы о пределах}%
+\label{sec:Основные теоремы о пределах}
+\begin{theorem}[Предельный переход в равенстве]
+    Если две функции принимают одинаковые значения в окрестности некоторой точки, то их пределы в этой точке совпадают.
+    \[
+        \forall x \in \overset{\circ}{U}(x_0) \rightarrow f(x) = g(x) \implies \lim_{x \to x_0}{f(x)} = \lim_{x \to x_0}{g(x)}
+    \]
+\end{theorem}
+
+\begin{theorem}[Предельный переход в неравенстве]
+    Если значения функции \(f(x)\) в окрестности некоторой точки не превосходят соответствующих значений функции \(g(x)\), то предел функции \(f(x)\) в этой точке не превосходит предела функции \(g(x)\).
+    \[
+        \forall x \in \overset{\circ}{U}(x_0) \; f(x) < g(x) \implies \lim_{x \to x_0}{f(x)} = \lim_{x \to x_0}{g(x)}
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Предел константы равен самой константе
+    \[
+        \lim_{x \to x_0}{c} = c, \quad c = const
+    \]
+\end{theorem}
+
+\begin{proof}
+    Пусть \(\forall x \in D \; f(x) = c\).
+    Воспользуемся определением предела функции по Коши:
+    \[
+        \forall \varepsilon > 0: \; \exists \delta = \delta(\varepsilon) > 0: (0 < |x - x_0| < \delta) \rightarrow (|f(x) - A| < \varepsilon)
+    \]
+
+    Тогда
+    \[
+        \forall x \in D \quad |f(x) - A| = |c - c| = 0 \quad \implies \quad \forall x \in D \quad |f(x) - A | < \varepsilon
+    \]
+
+    Следовательно
+    \[
+        \lim_{x \to x_0}{c} = c
+    \]
+\end{proof}
+
+\begin{theorem}
+    Функция не может иметь двух различных пределов в одной точке.
+\end{theorem}
+
+\begin{proof}
+    Будем доказывать от противного.
+
+    Пусть:
+    \[
+        \begin{cases}
+            \displaystyle
+            \lim_{x \to x_0}{f(x)} = A \\
+            \displaystyle
+            \lim_{x \to x_0}{f(x)} = B \\
+            A \neq B
+        \end{cases}
+    \]
+
+    Тогда по \plink{theorem:Теорема о связи функции, ее предела и бесконечно малой функции}{теореме о связи предела и бесконечно малой функции}:
+    \[
+        \begin{cases}
+            f(x) - A = \alpha(x) \text{ — б. м. при } x \to x_0 \\
+            f(x) - B = \beta(x) \text{ — б. м. при } x \to x_0
+        \end{cases}
+    \]
+
+    Вычитая эти равенства, получим:
+    \[
+        B - A = \alpha(x) - \beta(x)
+    \]
+
+    Тогда, переходя к пределам:
+    \begin{gather*}
+        \lim_{x \to x_0}{(B - A)} = \lim_{x \to x_0}{(\alpha(x) - \beta(x))} \\
+        \lim_{x \to x_0}{(B - A)} = 0 \\
+        B - A = 0 \\
+        B = A
+    \end{gather*}
+
+    Получили противоречие \(B = A\) и \(B \neq A\).
+\end{proof}
+
+\begin{theorem}
+    Если каждое слагаемое алгебраической суммы функций имеет предел при \(x \to x_0\), и алгебраическая сумма имеет предел при \(x \to x_0\), причем предел алгебраической суммы равен алгебраической сумме пределов.
+    \[
+        \lim_{x \to x_0}{(f(x) + g(x) - h(x))} = \lim_{x \to x_0}{f(x)} + \lim_{x \to x_0}{g(x)} - \lim_{x \to x_0}{h(x)}
+    \]
+\end{theorem}
+
+\begin{proof}
+    Пусть:
+    \[
+        \begin{cases}
+            \displaystyle
+            \lim_{x \to x_0}{f(x)} = A \\
+            \displaystyle
+            \lim_{x \to x_0}{g(x)} = B \\
+            \displaystyle
+            \lim_{x \to x_0}{h(x)} = C
+        \end{cases}
+    \]
+
+    Тогда \plink{theorem:Теорема о связи функции, ее предела и бесконечно малой функции}{по теореме о связи предела и бесконечно малой функции:}
+    \[
+        \begin{cases}
+            f(x) - A = \alpha(x) \\
+            g(x) - B = \beta(x)  \\
+            h(x) - C = \gamma(x) \\
+        \end{cases}
+    \]
+
+    где \(\alpha(x)\), \(\beta(x)\), \(\gamma(x)\) — б. м. при \(x \to x_0\). Тогда:
+
+    \[
+        f(x) + g(x) - h(x) - (A + B - C) = \alpha(x) + \beta(x) - \gamma(x)
+    \]
+
+    Переходя к пределам:
+    \[
+        \lim_{x \to x_0}{(f(x) + g(x) - h(x))} = A + B - C = \lim_{x \to x_0}{f(x)} + \lim_{x \to x_0}{g(x)} - \lim_{x \to x_0}{h(x)}
+    \]
+\end{proof}
+
+\begin{theorem}
+    Если каждый из сомножителей произведения конечного числа функций имеет предел \(x \to x_0\), то и произведение имеет предел при \(x \to x_0\), причем предел произведения равен произведению пределов.
+    \[
+        \lim_{x \to x_0}{(f(x) \cdot g(x))} = \lim_{x \to x_0}{f(x)} \cdot \lim_{x \to x_0}{g(x)}
+    \]
+\end{theorem}
+
+\begin{proof}
+    Пусть:
+    \[
+        \begin{cases}
+            \displaystyle
+            \lim_{x \to x_0}{f(x)} = A \\
+            \displaystyle
+            \lim_{x \to x_0}{g(x)} = B
+        \end{cases}
+    \]
+
+    Тогда \plink{theorem:Теорема о связи функции, ее предела и бесконечно малой функции}{по теореме о связи предела и бесконечно малой функции:}
+    \[
+        \begin{cases}
+            f(x) = A + \alpha(x) \\
+            g(x) = B + \beta(x)
+        \end{cases}
+    \]
+
+    где \(\alpha(x)\), \(\beta(x)\) — б. м. при \(x \to x_0\). Тогда:
+
+    \begin{gather*}
+        f(x) \cdot g(x) = (A + \alpha(x)) \cdot (B + \beta(x)) \\
+        f(x) \cdot g(x) = AB + \underbrace{A \beta(x) + \alpha(x) B + \alpha(x) + \beta(x)}_{\text{бесконечно малые}}
+    \end{gather*}
+
+    Переходя к пределам:
+    \[
+        \lim_{x \to x_0}{(f(x) \cdot g(x))} = AB =  \lim_{x \to x_0}{f(x)} \cdot \lim_{x \to x_0}{g(x)}
+    \]
+\end{proof}
+
+\begin{consequence}
+    Постоянный множитель можно выносить за знак предела.
+    \[
+        \lim_{x \to x_0}{(c \cdot f(x))} = c \cdot \lim_{x \to x_0}{f(x)}
+    \]
+\end{consequence}
+
+\begin{theorem}
+    Если функции \(f(x)\) и \(g(x)\) имеют придел при \(x \to x_0\), причем \(\displaystyle \lim_{x \to x_0}{g(x)} \neq 0\), то их частное имеет предел при \(x \to x_0\), причем предел частного равен частном пределов.
+    \[
+        \lim_{x \to x_0}{\frac{f(x)}{g(x)}} = \frac{\displaystyle \lim_{x \to x_0}{f(x)}}{\displaystyle \lim_{x \to x_0}{g(x)}}, \quad \lim_{x \to x_0}{g(x)} \neq 0
+    \]
+\end{theorem}
+
+\begin{proof}
+    Пусть:
+    \[
+        \begin{cases}
+            \displaystyle
+            \lim_{x \to x_0}{f(x)} = A \\
+            \displaystyle
+            \lim_{x \to x_0}{g(x)} = B
+        \end{cases}
+    \]
+
+    Тогда \plink{theorem:Теорема о связи функции, ее предела и бесконечно малой функции}{по теореме о связи предела и бесконечно малой функции:}
+    \[
+        \begin{cases}
+            f(x) = A + \alpha(x) \\
+            g(x) = B + \beta(x)
+        \end{cases}
+    \]
+
+    где \(\alpha(x)\), \(\beta(x)\) — б. м. при \(x \to x_0\). Тогда:
+
+    \begin{gather*}
+        \frac{f(x)}{g(x)} = \frac{A + \alpha(x)}{B + \beta(x)} \\
+        \frac{f(x)}{g(x)} = \frac{A + \alpha(x)}{B + \beta(x)} + \frac{A}{B} - \frac{A}{B} \\
+        \frac{f(x)}{g(x)} = \frac{A}{B} + \underbrace{\frac{B\alpha(x) - A \beta(x)}{B(B + \beta(x))}}_{\text{бесконечно малая}}
+    \end{gather*}
+
+    Переходя к пределам:
+    \[
+        \lim_{x \to x_0}{\dfrac{f(x)}{g(x)}} = \frac{A}{B} = \dfrac{\displaystyle \lim_{x \to x_0}{f(x)}}{\displaystyle \lim_{x \to x_0}{g(x)}}
+    \]
+\end{proof}
+
+% TODO переместить в другое место
+\begin{theorem}[Связь функции, ее предела и бесконечно малой функции]
+    \label{theorem:Теорема о связи функции, ее предела и бесконечно малой функции}
+    \newpar
+
+    Если функция \(f(x)\) имеет предел \(\displaystyle \lim_{x \to x_0}{f(x)} = A\), то разность между функцией и значением предела есть функция, бесконечно малая при \(x \to x_0\).
+    \[
+        \lim_{x \to x_0}{f(x)} = A \quad \iff \quad f(x) - A = \alpha(x), \quad \lim_{x \to x_0}{\alpha(x)} = 0
+    \]
+\end{theorem}
+
+\begin{proof}
+    Для функции \(f(x)\) воспользуемся определением предела по Коши:
+    \[
+        \lim_{x \to x_0}{f(x)} = A \; \implies \quad \forall \varepsilon > 0 \quad \exists \delta > 0: (0 < |x - x_0| < \delta) \rightarrow (|f(x) - A| < \varepsilon)
+    \]
+
+    В случае бесконечно малой функции определение выглядит так:
+    \[
+        \lim_{x \to x_0}{\alpha(x)} = 0 \; \implies \quad \forall \varepsilon > 0 \quad \exists \delta > 0: (0 < |x - x_0| < \delta) \rightarrow (|\alpha(x)| < \varepsilon)
+    \]
+
+    Сравнивая определения пределов функций, видим, что \(f(x) - A = \alpha(x)\).
+\end{proof}
 
 \section{Сравнение пределов. Теорема о двух милиционерах}%
 \label{sec:Сравнение пределов. Теорема о двух милиционерах}
@@ -1921,7 +2493,7 @@
         \Big(1 + \frac{1}{n}\Big)^n < 1 + \Big(1 + \frac{1}{2} + \frac{1}{2^2} + ... + \frac{1}{2^{n - 1}}\Big)
     \end{gather*}
 
-    Заметим, что в скобках получилась геометрическая прогрессия, сумма которой равна \(2 \cdot \Big(1 - \dfrac{1}{2^n}\Big) < 2>\). А значит:
+    Заметим, что в скобках получилась геометрическая прогрессия, сумма которой равна \(2 \cdot \Big(1 - \dfrac{1}{2^n}\Big) < 2\). А значит:
     \begin{gather*}
         2 \leq \Big(1 + \frac{1}{n}\Big)^n < 3
     \end{gather*}
@@ -1964,35 +2536,78 @@
     \item {Число \(e\) разлагается в бесконечную дробь}
 \end{enumerate}
 
-\section{Теоремы Вейерштрасса}%
-\label{sec:Теоремы Вейерштрасса}
+\section{Теорема Вейерштрасса об ограниченности непрерывной на отрезке функции}%
+\label{sec:Теорема Вейерштрасса об ограниченности непрерывной на отрезке функции}
 
-\begin{theorem*}[Вейерштрасса для непрерывных функций]
-    \newpar
-    Если функция \(f(x)\) непрерывна на всем \([a, b]\), то она ограничена на нем и притом \(\exists \min{(f(x))}, \max{(f(x))}\), т. е. \(\exists \; x_m, x_M \in [a, b]: f(x_m) \leq f(x) \leq f(x_M) \; \forall x \in [a, b]\).
-\end{theorem*}
-
-\begin{theorem*}[Вейерштрасса для полунепрерывных функций]
-    \newpar
-    Если функция \(f(x): [a, b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{сверху}, то:
+\begin{theorem*}
+    Если функция \(f(x)\) непрерывна на \([a, b]\), то она ограничена на нем, то есть:
     \[
-        \begin{cases}
-            M = \underset{x \in [a, b]}{\sup}f(x) < +\infty \\
-            \exists x_M \in [a, b]: f(x_M) = M
-        \end{cases}
-    \]
-
-    Если функция \(f(x): [a, b] \to \mathbb{R}\) ограничена и полунепрерывна \textbf{снизу}, то:
-    \[
-        \begin{cases}
-            m = \underset{x \in [a, b]}{\inf}f(x) > -\infty \\
-            \exists x_m \in [a, b]: f(x_m) = m
-        \end{cases}
+        \exists M \in R: \quad \forall x \in [a, b] \quad |f(x)| \leq M
     \]
 \end{theorem*}
 
 \begin{proof}
-    % TODO добавить доказательство
+    Докажем от противного. Пусть \(f(x)\) не ограничена, тогда
+    \[
+        \forall n \in \mathbb{N} \; \exists x_n \in [a, b]: |f(x_n)| > n
+    \]
+
+    Мы получили последовательность точек \(\{x_n\} \subset [a, b]: f(x_n) \overset{n \to \infty}{\longrightarrow} \infty\). Тогда, поскольку \(\{x_n\}\) ограничена, по \plink{sec:Теорема Больцано-Вейерштрасса}{теореме Больцано-Вейерштрасса} существует такая подпоследовательность \(\{x_{n_k}\}\), что \(x_{n_k} \rightarrow c \in [a, b]\).
+
+    В силу непрерывности \(f(x)\) на \([a, b]\) и, в частности, в точке \(c\), следует, что \(f(x_{n_k}) \overset{k \to \infty}{\longrightarrow} f(c)\). Получили противоречие, поскольку
+    \[
+        \begin{cases}
+            f(x_n) \overset{n \to \infty}{\longrightarrow} \infty \implies f(x_{n_k}) \overset{k \to \infty}{\longrightarrow} \infty \\
+            f(x_{n_k}) \overset{k \to \infty}{\longrightarrow} f(c)
+        \end{cases}
+    \]
+
+    Это противоречие доказывает теорему.
+\end{proof}
+
+\section{Теорема Вейерштрасса о достижении максимума и минимума}%
+\label{sec:Теорема Вейерштрасса о достижении максимума и минимума}
+
+\begin{theorem*}
+    Функция, непрерывная на отрезке, принимает наибольшие и наименьшие значения, то есть:
+    \[
+        \exists p, q \in [a, b]: \quad f(p) = \underset{x \in [a, b]}{\min} f(x), \quad f(q) = \underset{x \in [a, b]}{\max} f(x)
+    \]
+\end{theorem*}
+
+\begin{proof}
+    Докажем существование максимума. Пусть
+    \[
+        M = \underset{x \in [a, b]}{\sup} f(x)
+    \]
+
+    Поскольку \(f(x)\) ограничена, \(M\) — конечное число. Также пусть \(\forall x \in [a, b] \; f(x) < M\). Если бы \(\exists x_M \in [a, b]: f(x_M) = M\), то \(M\) являлся бы максимумом, который достигается в точке \(x_M\). Введем вспомогательную функцию:
+    \[
+        g(x) = \frac{1}{M - f(x)}
+    \]
+
+    Она будет непрерывна на \([a, b]\), поскольку и числитель, и знаменатель непрерывны на \([a, b]\), а также знаменатель не обращается в ноль. Тогда по \plink{sec:Теорема Вейерштрасса об ограниченности непрерывной на отрезке функции}{первой теореме Вейерштрасса} \(g(x)\) ограничена сверху \(M_1\):
+    \[
+        \forall x \in [a, b] \quad g(x) \leq M_1
+    \]
+
+    Из этого следует, что
+    \[
+        \frac{1}{M - f(x)} \leq M_1 \implies f(x) \leq M - \frac{1}{M_1} < M
+    \]
+
+    Заметим, что
+    \[
+        \begin{cases}
+            M = \underset{x \in [a, b]}{\sup} f(x) \\
+            f(x) < M                               \\
+            f(x) \leq M - \dfrac{1}{M_1} < M
+        \end{cases}
+    \]
+
+    Мы пришли к противоречию: \(M\) — является наименьшей из верхней границ \(f(x)\), однако \(M - \dfrac{1}{M_1}\) также является верхней границей \(f(x)\), притом \(M - \dfrac{1}{M_1} < M\). Значит неравенство \(f(x) < M\) не может быть строгим при \(x \in [a, b]\).
+
+    Доказательство для минимума аналогичное.
 \end{proof}
 
 \section{Теорема Ролля}%
@@ -2004,9 +2619,7 @@
 \begin{proof}
     Если \(f(x)\) постоянна на всем \([a, b]\), то утверждение верно и очевидно, поскольку \(f'(x) = 0 \; \forall x \in (a, b)\).
 
-    Если же нет, поскольку \(f(a) = f(b)\), то согласно \plink{sec:Теоремы Вейерштрасса}{теореме Вейерштрасса}, \(\exists \min{(f(x)), \max{(f(x))}}\), то есть имеет в этой точке локальный экстремум, и по лемме Ферма производная в этой точке равна 0.
-
-    Поскольку \(f(x)\) непрерывна на \([a, b]\)
+    Если же нет, поскольку \(f(a) = f(b)\), то согласно \plink{sec:Теорема Вейерштрасса о достижении максимума и минимума}{теореме Вейерштрасса}, \(\exists \min{(f(x)), \max{(f(x))}}\), то есть имеет в этой точке локальный экстремум, и по лемме Ферма производная в этой точке равна 0.
 \end{proof}
 
 \section{Теоремы Лагранжа и Коши}%
@@ -2073,7 +2686,7 @@
 
     Поскольку существует \(\displaystyle \lim_{x \to a}{\dfrac{f'(x)}{g'(x)}}\), который равен
     \[
-        \lim_{x \to a}{\frac{f(x)}{g(x)}} =
+        \lim_{x \to a}{\frac{f'(x)}{g'(x)}} =
         \lim_{x \to a}{\frac{f'(c)}{g'(c)}}
     \]
 
@@ -2234,6 +2847,159 @@
 
 \begin{proof}
     % TODO добавить доказательство односторонних производных
+\end{proof}
+
+\chapter{Исследование функции}%
+\label{cha:Исследование функции}
+
+\section{Выпуклость функции}%
+\label{sec:Выпуклость функции}
+
+\begin{siderules}
+    График дифференцируемой функции \(f(x)\) называют \textbf{выпуклым или выпуклым вниз (вогнутым или выпуклым вверх)} на \((a, b)\), если он расположен \textbf{не выше (не ниже)} любой касательной, проведенной к графику функции в этом интервале.
+\end{siderules}
+
+\begin{figure*}[h]
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{convex.png}
+        \caption*{Выпуклый график}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{concave.png}
+        \caption*{Вогнутый график}
+    \end{subfigure}
+\end{figure*}
+
+\section{Точки перегиба. Необходимое и достаточное условия перегиба}%
+\label{sec:Точки перегиба. Необходимое и достаточное условия перегиба}
+
+\begin{siderules}
+    Пусть \(f(x)\) дифференцируема на \((a, b)\). Тогда точка \(M(x_0, f(x_0)), x_0 \in (a, b)\) называется \textbf{точкой перегиба}, если в данной точке существует касательная к графику функции и существует такая окрестность точки \(x_0\), в пределах которой график \(f(x)\) слева и справа от точки \(M\) имеет разные направления выпуклости.
+\end{siderules}
+
+\begin{siderules}
+    \textbf{Критическими точками второго рода} функции называют те значения аргумента, при которых \textbf{вторая производная} этой функции \textbf{равна нулю} или \textbf{не существует}
+\end{siderules}
+
+\begin{theorem}[Достаточное условие вогнутости или выпуклости графика]
+    \label{theorem:Достаточное условие вогнутости или выпуклости графика}
+    \newpar
+    Пусть \(f(x)\) определена на \((a, b)\). Кроме того \(\forall x \in (a, b) \; \exists f''(x)\). Тогда
+    \begin{gather*}
+        \forall x \in (a, b) \; f''(x) > 0 \implies \text{ кривая вогнутая} \\
+        \forall x \in (a, b) \; f''(x) < 0 \implies \text{ кривая выпуклая}
+    \end{gather*}
+\end{theorem}
+
+\begin{proof}
+    Докажем случай при \(f''(x) < 0\). Доказательство для случая \(f''(x) > 0\) аналогичное.
+
+    Пусть у нас есть две функции:
+    \[
+        \begin{cases}
+            y = f(x)                                   \\
+            y_{\text{кас}} = f(x_0) + f'(x_0)(x - x_0) \\
+            x, x_0 \in (a, b)
+        \end{cases}
+    \]
+
+    Кроме того, пусть \(x > x_0\). Случай при \(x < x_0\) рассмотрим позднее.
+
+    Покажем, что график функции \(f(x)\) ниже касательной: для этого сравним ординаты в точке \(x\):
+    \begin{gather*}
+        y - y_{\text{кас}} = f(x) - (f(x_0) + f'(x_0)(x - x_0)) \\
+        y - y_{\text{кас}} = f(x) - f(x_0) - f'(x_0)(x - x_0)
+    \end{gather*}
+
+    Поскольку \(f(x)\) определена и дифференцируема на \((a, b)\), воспользуемся теоремой Лагранжа:
+    \[
+        f(x) - f(x_0) = f'(c)(x - x_0), c \in (x_0, x)
+    \]
+
+    Тогда
+    \begin{gather*}
+        y - y_{\text{кас}} = f'(c)(x - x_0) - f'(x_0)(x - x_0) \\
+        y - y_{\text{кас}} = (x - x_0)(f'(c) - f'(x_0))
+    \end{gather*}
+
+    Снова воспользуемся теоремой Лагранжа:
+    \[
+        f'(c) - f'(x_0) = f''(c_1)(c - x_0), c_1 \in (x_0, c)
+    \]
+
+    Тогда:
+    \begin{gather*}
+        \begin{cases}
+            y - y_{\text{кас}} = f''(c_1)(c - x_0)(x - x_0) \\
+            f''(c_1) < 0 \text{ (по условию)}               \\
+            c - x_0 > 0                                     \\
+            x - x_0 > 0
+        \end{cases}
+        \implies
+        y < y_{\text{кас}}
+    \end{gather*}
+
+    Теперь рассмотрим случай, когда \(x < x_0\). Немного изменятся промежутки:
+    \[
+        \begin{cases}
+            c \in (x, x_0) \\
+            c_1 \in (x, c)
+        \end{cases}
+    \]
+
+    Тогда:
+    \begin{gather*}
+        \begin{cases}
+            y - y_{\text{кас}} = f''(c_1)(c - x_0)(x - x_0) \\
+            f''(c_1) < 0 \text{ (по условию)}               \\
+            c - x_0 < 0                                     \\
+            x - x_0 < 0
+        \end{cases}
+        \implies
+        y < y_{\text{кас}}
+    \end{gather*}
+
+    И при \(x > x_0\), и при \(x < x_0\) \(y < y_{\text{кас}}\) \(\forall x \in (a, b)\).
+\end{proof}
+
+\begin{theorem}[Необходимое условие существования точки перегиба]
+    \newpar
+    Если \(x_0\) — точка перегиба функции \(f(x)\) и данная функция имеет вторую производную в некоторой окрестности точки \(x_0\), причем в точке \(x_0\) она непрерывна, то \(f''(x) = 0\).
+\end{theorem}
+
+\begin{proof}
+    Докажем от противного. Пусть \(f''(x_0) \neq 0\). Поскольку \(f(x)\) непрерывна при \(x = x_0\), то существует \(\delta\)-окрестность \(x_0\), в которой производная сохраняет свой знак, то есть:
+    \[
+        \forall x \in (x_0 - \delta, x_0 + \delta) \; f''(x_0) < 0
+    \]
+
+    В таком случае функция будет либо строго выпукла вверх (при \(f''(x) < 0\)), либо строго выпукла вниз (при \(f''(x) > 0\)). Но тогда точка \(x_0\) не является точкой перегиба. Это противоречие доказывает теорему.
+\end{proof}
+
+\begin{theorem}[Первое достаточное условие существования точки перегиба]
+    \newpar
+    Если функция \(f(x)\) непрерывна и дифференцируема в точке \(x_0\), имеет вторую производную \(f''(x)\) в некоторой проколотой \(\delta\)-окрестности точки \(x_0\) и вторая производная меняет знак при переходе через \(x_0\), то \(x_0\) является точкой перегиба функции \(f(x)\).
+\end{theorem}
+
+\begin{proof}
+    Пусть вторая производная \(f''(x)\) при переходе через точку \(x_0\) меняет знак с плюса на минус. Тогда:
+    \[
+        \begin{cases}
+            \forall x \in (x_0 - \delta, x_0) \; f''(x) > 0 \\
+            \forall x \in (x_0, x_0 + \delta) \; f''(x) < 0
+        \end{cases}
+    \]
+
+    В таком случае, согласно \plink{theorem:Достаточное условие вогнутости или выпуклости графика}{достаточному условию выпуклости}, функция \(f(x)\) выпукла вниз при \(x \in (x_0 - \delta, x_0)\) и выпукла вверх при \(x \in (x_0, x_0 + \delta)\). Следовательно в точке \(x_0\) функция меняет направление выпуклости, то есть по определению является точкой перегиба.
+\end{proof}
+
+\begin{theorem}[Второй достаточное условие существование точки перегиба]
+    \newpar
+    Пусть есть функция \(f(x): \exists f''(x_0) = 0\). Если \(\exists f'''(x) \neq 0\), то \(x_0\) является точкой перегиба функции \(f(x)\).
+\end{theorem}
+
+\begin{proof}
+    Поскольку \(f'''(x_0) \neq 0\), то \(f''(x)\) либо строго возрастает (при \(f'''(x_0) > 0\)), либо строго убывает (при \(f'''(x_0) < 0\)). Так как \(f''(x) = 0\), то вторая производная имеет разные знаки в левой и правой \(\delta\)-окрестности точки \(x_0\). Отсюда, на основании предыдущей теоремы, следует, что \(x_0\) — точка перегиба функции \(f(x)\).
 \end{proof}
 
 \end{document}
