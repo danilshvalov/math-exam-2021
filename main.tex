@@ -2364,7 +2364,7 @@
 \begin{theorem}[Предельный переход в неравенстве]
     Если значения функции \(f(x)\) в окрестности некоторой точки не превосходят соответствующих значений функции \(g(x)\), то предел функции \(f(x)\) в этой точке не превосходит предела функции \(g(x)\).
     \[
-        \forall x \in \overset{\circ}{U}(x_0) \; f(x) < g(x) \implies \lim_{x \to x_0}{f(x)} = \lim_{x \to x_0}{g(x)}
+        \forall x \in \overset{\circ}{U}(x_0) \; f(x) \leq g(x) \implies \lim_{x \to x_0}{f(x)} \leq \lim_{x \to x_0}{g(x)}
     \]
 \end{theorem}
 
@@ -3138,6 +3138,21 @@
         dy = f'(x)dx
     \]
 \end{definition}
+
+\begin{definition}[Дифференциал n-го порядка]
+    В общем случае дифференциал \(n\)-го порядка выражается формулой:
+    \[
+        d^n = f^{(n)}(x)dx^n
+    \]
+\end{definition}
+
+\subsection{Свойства дифференциалов}%
+\label{sub:Свойства дифференциалов}
+Пусть функции \(u\) и \(v\) имеют производные \(n\)-го порядка. Тогда справедливы следующие свойства:
+\begin{gather*}
+    d^n (\alpha u + \beta v) = \alpha d^n u + \beta d^n v \\
+    d^n (uv) = \sum_{i = 0}^n C_n^i d^{n - i} u d^i v
+\end{gather*}
 
 \chapter{Исследование функции}%
 \label{cha:Исследование функции}
